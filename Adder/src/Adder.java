@@ -2,19 +2,37 @@ import java.util.Scanner;
 public class Adder {
     public static void main(String[] args) {
         int sum;
-        int num1;
-        int num2;
+        int num1 = 0;
+        int num2 = 0;
         String in1 = "";
         String in2 = "";
         var aScanner = new Scanner(System.in);
 
-        System.out.println("First number to be added:");
-        in1 = aScanner.nextLine();
+        boolean validIn = false;
+        while (!validIn) {
+            try {
+                System.out.println("First number to be added:");
+                in1 = aScanner.nextLine();
+                num1 = Integer.parseInt(in1);
+                validIn = true;
+            } catch (NumberFormatException ex) {
+                System.out.println("Invalid number");
+            }
+        }
 
-        System.out.println("First number to be added:");
-        in2 = aScanner.nextLine();
+        validIn = false;
+        while (!validIn) {
+            try {
+                System.out.println("Second number to be added:");
+                in2 = aScanner.nextLine();
+                num2 = Integer.parseInt(in2);
+                validIn = true;
+            } catch (NumberFormatException ex) {
+                System.out.println("Invalid number");
+            }
+        }
 
-        sum = Integer.parseInt(in1) + Integer.parseInt(in2);
+        sum = num1 + num2;
 
         System.out.println("Sum is: " + sum);
     }

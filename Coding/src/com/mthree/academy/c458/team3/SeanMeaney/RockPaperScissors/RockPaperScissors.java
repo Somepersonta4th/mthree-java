@@ -18,14 +18,14 @@ public class RockPaperScissors {
 
             //get round count
             System.out.println("How many rounds do you want to play (1-10)?");
-            try {
+            try { //check is int
                 roundNums = Integer.parseInt(aScanner.nextLine());
             } catch (NumberFormatException ex) {
                 System.out.println("Invalid input. Quitting.");
                 return;
             }
 
-            //check if roundNums in range
+            //check roundNums is in range
             if (roundNums > 10 || roundNums < 1) {
                 System.out.println("Outside of range. Quitting.");
                 return;
@@ -35,9 +35,15 @@ public class RockPaperScissors {
             playerWins = 0;
             computerWins = 0;
 
+            //iterate through rounds
             for (int i = 0; i < roundNums; i++) {
                 System.out.println("Round " + (i + 1) + ":");
-                System.out.println("Your move. Enter a number:\n1. Rock\n2. Paper\n3. Scissors");
+                System.out.println(
+                        "Your move. Enter a number:\n"+
+                        "1. Rock\n"+
+                        "2. Paper\n"+
+                        "3. Scissors"
+                );
 
                 //get player move
                 try {
@@ -64,18 +70,27 @@ public class RockPaperScissors {
                     default:
                         draws++;
                 }
-
             }
+
             //decare overall winner
-            if (playerWins > computerWins) {
-                System.out.println("Player wins overall with " + playerWins + " : " + computerWins);
-            } else if (playerWins < computerWins) {
-                System.out.println("Computer wins with overall " + playerWins + " : " + computerWins);
-            } else {
-                System.out.println("Ends in a draw with " + playerWins + " : " + computerWins);
+            if (playerWins > computerWins) { //player wins
+                System.out.println(
+                        "Player wins overall with " + playerWins + " : " + computerWins
+                );
+            } else if (playerWins < computerWins) { //computer wins
+                System.out.println(
+                        "Computer wins with overall " + playerWins + " : " + computerWins
+                );
+            } else { //draw (default)
+                System.out.println(
+                        "Ends in a draw with " + playerWins + " : " + computerWins
+                );
             }
 
-            System.out.println("Play again?\n(Yes/No)");
+            System.out.println(
+                    "Play again?\n"+
+                    "(Yes/No)"
+            );
             if (!aScanner.nextLine().equals("Yes")) {
                 playing = false;
                 System.out.println("Thanks for playing!");
@@ -143,11 +158,14 @@ class GameRound {
     //Return a string describing round results
     public String formatResult() {
         return switch (result) {
-            case 1 -> "Player won, " + mapMoveToString(playerMove) +
+            case 1 -> //player wins
+                    "Player won, " + mapMoveToString(playerMove) +
                     " beats " + mapMoveToString(computerMove);
-            case 2 -> "Computer won, " + mapMoveToString(computerMove) +
+            case 2 -> //computer wins
+                    "Computer won, " + mapMoveToString(computerMove) +
                     " beats " + mapMoveToString(playerMove);
-            default -> "Draw, both chose " + mapMoveToString(this.playerMove);
+            default -> //draw
+                    "Draw, both chose " + mapMoveToString(this.playerMove);
         };
     }
 
@@ -155,8 +173,8 @@ class GameRound {
         return this.RNG.nextInt(0,3);
     }
 
+    //return move name as string
     private String mapMoveToString(int move){
-        //return move name
         return switch (move) {
             case 0 -> "rock";
             case 1 -> "paper";
@@ -165,16 +183,17 @@ class GameRound {
         };
     }
 
+    //return result id
     private int mapGameStateToResult(int gameState){
-        //return result identifier
         return switch (gameState) {
             case -2,1 -> 1; //player win
             case -1,2 -> 2; //computer win
             default -> 0; //draw
         };
     }
+
+    //return winner as string
     private String mapResultToWinner(){
-        //return winner
         return switch (result) {
             case 0 -> "draw";
             case 1 -> "player";

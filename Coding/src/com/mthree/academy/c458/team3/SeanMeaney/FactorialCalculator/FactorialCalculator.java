@@ -1,6 +1,8 @@
+package com.mthree.academy.c458.team3.SeanMeaney.FactorialCalculator;
+
 import java.util.Scanner;
 
-public class Main {
+public class FactorialCalculator {
     public static void main(String[] args) {
         var s = new Scanner(System.in);
         int num = getInput(s,"Provide a positive integer between 1 and 10: ");

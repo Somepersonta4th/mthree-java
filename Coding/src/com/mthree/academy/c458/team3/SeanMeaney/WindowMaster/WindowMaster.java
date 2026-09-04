@@ -1,6 +1,8 @@
+package com.mthree.academy.c458.team3.SeanMeaney.WindowMaster;
+
 import java.util.Scanner;
 
-public class Main {
+public class WindowMaster {
     public static void main(String[] args) {
         var s = new Scanner(System.in);
         float height = getFloatFromUser(s,"Window height:");

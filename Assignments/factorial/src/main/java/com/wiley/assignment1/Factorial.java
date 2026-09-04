@@ -35,13 +35,15 @@ public class Factorial {
 
 		//YOUR CODE STARTS HERE
 
+		 //preempt type error
 		 try {
+			 //get number as int
 			 num = Integer.parseInt(scanner.nextLine());
-			 if (num < 1 || num > 10) { //is not in range
+			 if (num < 1 || num > 10) { 		//invalid is not in range
 				 this.printStream.print("Invalid entry. Please enter an integer between 1 and 10, inclusive.");
 				 return -1;
 			 }
-		 } catch (NumberFormatException ex) { //is not int
+		 } catch (NumberFormatException ex) { 		//invalid is not int
 			 this.printStream.print("Invalid entry. Please enter an integer between 1 and 10, inclusive.");
 			 return -1;
 		 }

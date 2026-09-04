@@ -11,12 +11,25 @@ public class RockPaperScissors {
         int playerWins;
         int computerWins;
         int roundNums;
+        int playerMove;
         boolean playing = true;
 
         while (playing) {
+
             //get round count
-            System.out.println("How many rounds do you want to play?");
-            roundNums = Integer.parseInt(aScanner.nextLine());
+            System.out.println("How many rounds do you want to play (1-10)?");
+            try {
+                roundNums = Integer.parseInt(aScanner.nextLine());
+            } catch (NumberFormatException ex) {
+                System.out.println("Invalid input. Quitting.");
+                return;
+            }
+
+            //check if roundNums in range
+            if (roundNums > 10 || roundNums < 1) {
+                System.out.println("Outside of range. Quitting.");
+                return;
+            }
 
             draws = 0;
             playerWins = 0;
@@ -26,8 +39,16 @@ public class RockPaperScissors {
                 System.out.println("Round " + (i + 1) + ":");
                 System.out.println("Your move. Enter a number:\n1. Rock\n2. Paper\n3. Scissors");
 
-                //run a round with user inputted move
-                var currentRound = new GameRound(Integer.parseInt(aScanner.nextLine())-1);
+                //get player move
+                try {
+                    playerMove = Integer.parseInt(aScanner.nextLine());
+                } catch (NumberFormatException ex) {
+                    System.out.println("Invalid input. Quitting.");
+                    return;
+                }
+
+                //run a round with player move
+                var currentRound = new GameRound(Integer.parseInt(aScanner.nextLine()) - 1);
 
                 //decare round winner
                 System.out.println("||" + currentRound.formatResult() + "||");
@@ -119,7 +140,7 @@ class GameRound {
         this.winner = mapResultToWinner();
     }
 
-    //
+    //Return a string describing round results
     public String formatResult() {
         return switch (result) {
             case 1 -> "Player won, " + mapMoveToString(playerMove) +

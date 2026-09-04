@@ -1,4 +1,4 @@
-package com.mthree.academy.c458.team3.SeanMeaney.LuckySevens;
+package com.mthree.academy.c458.team3.SeanMeaney.JavaBasics.LuckySevens;
 
 import java.util.Random;
 import java.util.Scanner;

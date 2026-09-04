@@ -1,4 +1,4 @@
-package com.mthree.academy.c458.team3.SeanMeaney.RockPaperScissors;
+package com.mthree.academy.c458.team3.SeanMeaney.JavaBasics.RockPaperScissors;
 
 import java.util.Random;
 import java.util.Scanner;
@@ -47,17 +47,17 @@ public class RockPaperScissors {
 
                 //get player move
                 try {
-                    playerMove = Integer.parseInt(aScanner.nextLine());
+                    playerMove = Integer.parseInt(aScanner.nextLine()) - 1;
                 } catch (NumberFormatException ex) {
                     System.out.println("Invalid input. Quitting.");
                     return;
                 }
 
                 //run a round with player move
-                var currentRound = new GameRound(Integer.parseInt(aScanner.nextLine()) - 1);
+                var currentRound = new GameRound(playerMove);
 
                 //decare round winner
-                System.out.println("||" + currentRound.formatResult() + "||");
+                System.out.println("||" + currentRound.formatResult() + "||\n");
 
                 //tally result
                 switch (currentRound.result) {

@@ -1,4 +1,4 @@
-package com.mthree.academy.c458.team3.SeanMeaney.FactorialCalculator;
+package com.mthree.academy.c458.team3.SeanMeaney.JavaBasics.FactorialCalculator;
 
 import java.util.Scanner;
 

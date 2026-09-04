@@ -1,4 +1,4 @@
-package com.mthree.academy.c458.team3.SeanMeaney.WindowMaster;
+package com.mthree.academy.c458.team3.SeanMeaney.JavaBasics.WindowMaster;
 
 import java.util.Scanner;
 

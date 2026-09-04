@@ -1,4 +1,4 @@
-package com.mthree.academy.c458.team3.SeanMeaney.Adder;
+package com.mthree.academy.c458.team3.SeanMeaney.JavaBasics.Adder;
 
 import java.util.Scanner;
 public class Adder {

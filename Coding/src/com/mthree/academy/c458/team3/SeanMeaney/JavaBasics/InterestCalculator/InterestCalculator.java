@@ -1,4 +1,4 @@
-package com.mthree.academy.c458.team3.SeanMeaney.InterestCalculator;
+package com.mthree.academy.c458.team3.SeanMeaney.JavaBasics.InterestCalculator;
 
 import java.util.Scanner;
 

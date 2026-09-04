@@ -1,4 +1,4 @@
-package com.mthree.academy.c458.team3.SeanMeaney.EmployeeSalaryCalculator;
+package com.mthree.academy.c458.team3.SeanMeaney.JavaBasics.EmployeeSalaryCalculator;
 
 public class EmployeeSalaryCalculator {
     public static void main(String[] args) {

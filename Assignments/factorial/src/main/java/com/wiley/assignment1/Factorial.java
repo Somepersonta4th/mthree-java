@@ -65,7 +65,7 @@ public class Factorial {
 		int result = 1;
 		//YOUR CODE STARTS HERE
 
- 		for (int i = 1; i <= num; i++) {
+ 		for (int i = 1; i <= num; i++) { //result = 1 * 2 * ... * i * ... * num
 			 result = result * i;
 		}
 

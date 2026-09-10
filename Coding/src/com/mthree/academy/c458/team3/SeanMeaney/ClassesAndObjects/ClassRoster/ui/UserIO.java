@@ -15,13 +15,13 @@ public interface UserIO {
 
     float readFloat(String prompt,float min, float max);
 
-    float readInt(String prompt);
+    int readInt(String prompt);
 
-    float readInt(String prompt,int min, int max);
+    int readInt(String prompt,int min, int max);
 
-    float readLong(String prompt);
+    long readLong(String prompt);
 
-    float readLong(String prompt,long min, long max);
+    long readLong(String prompt,long min, long max);
 
 
 }

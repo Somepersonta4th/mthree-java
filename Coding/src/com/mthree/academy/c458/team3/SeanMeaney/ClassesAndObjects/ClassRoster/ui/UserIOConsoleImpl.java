@@ -36,7 +36,7 @@ public class UserIOConsoleImpl implements UserIO {
         while (true) {
             try {
                 int in = Integer.parseInt(SCANNER.nextLine());
-                if (in>min && in<max) {
+                if (in>=min && in<=max) {
                     return in;
                 }
             } catch (NumberFormatException ignored) {}

@@ -1,6 +1,8 @@
 package com.mthree.academy.c458.team3.SeanMeaney.ClassesAndObjects.ClassRoster;
 
 import com.mthree.academy.c458.team3.SeanMeaney.ClassesAndObjects.ClassRoster.controller.ClassRosterController;
+import com.mthree.academy.c458.team3.SeanMeaney.ClassesAndObjects.ClassRoster.dao.ClassRosterAuditDao;
+import com.mthree.academy.c458.team3.SeanMeaney.ClassesAndObjects.ClassRoster.dao.ClassRosterAuditDaoFileImpl;
 import com.mthree.academy.c458.team3.SeanMeaney.ClassesAndObjects.ClassRoster.dao.ClassRosterDao;
 import com.mthree.academy.c458.team3.SeanMeaney.ClassesAndObjects.ClassRoster.dao.ClassRosterDaoFileImpl;
 import com.mthree.academy.c458.team3.SeanMeaney.ClassesAndObjects.ClassRoster.service.ClassRosterServiceLayer;
@@ -15,7 +17,8 @@ public class App {
         UserIO io = new UserIOConsoleImpl();
         ClassRosterView consoleView = new ClassRosterView(io);
         ClassRosterDao fileDao = new ClassRosterDaoFileImpl();
-        ClassRosterServiceLayer service = new ClassRosterServiceLayerImpl(fileDao);
+        ClassRosterAuditDao auditDao = new ClassRosterAuditDaoFileImpl();
+        ClassRosterServiceLayer service = new ClassRosterServiceLayerImpl(fileDao,auditDao);
 
         ClassRosterController controller = new ClassRosterController(consoleView,service);
         controller.run();

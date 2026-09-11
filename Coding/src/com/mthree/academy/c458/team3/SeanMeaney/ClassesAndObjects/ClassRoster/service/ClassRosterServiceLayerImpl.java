@@ -1,5 +1,6 @@
 package com.mthree.academy.c458.team3.SeanMeaney.ClassesAndObjects.ClassRoster.service;
 
+import com.mthree.academy.c458.team3.SeanMeaney.ClassesAndObjects.ClassRoster.dao.ClassRosterAuditDao;
 import com.mthree.academy.c458.team3.SeanMeaney.ClassesAndObjects.ClassRoster.dao.ClassRosterDao;
 import com.mthree.academy.c458.team3.SeanMeaney.ClassesAndObjects.ClassRoster.dao.ClassRosterPersistenceException;
 import com.mthree.academy.c458.team3.SeanMeaney.ClassesAndObjects.ClassRoster.dto.Student;
@@ -9,9 +10,11 @@ import java.util.List;
 public class ClassRosterServiceLayerImpl implements ClassRosterServiceLayer {
 
     ClassRosterDao dao;
+    private ClassRosterAuditDao auditDao;
 
-    public ClassRosterServiceLayerImpl(ClassRosterDao dao) {
+    public ClassRosterServiceLayerImpl(ClassRosterDao dao,ClassRosterAuditDao auditDao) {
         this.dao = dao;
+        this.auditDao = auditDao;
     }
 
     private void validateStudentData(Student student) throws
@@ -55,6 +58,10 @@ public class ClassRosterServiceLayerImpl implements ClassRosterServiceLayer {
         // and persist the Student object
         dao.addStudent(student.getStudentId(), student);
 
+        // The student was successfully created, now write to the audit log
+        auditDao.writeAuditEntry(
+                "Student " + student.getStudentId() + " CREATED.");
+
     }
 
     @Override
@@ -69,7 +76,10 @@ public class ClassRosterServiceLayerImpl implements ClassRosterServiceLayer {
 
     @Override
     public Student removeStudent(String studentId) throws ClassRosterPersistenceException {
-        return dao.removeStudent(studentId);
+        Student removedStudent = dao.removeStudent(studentId);
+        // Write to audit log
+        auditDao.writeAuditEntry("Student " + studentId + " REMOVED.");
+        return removedStudent;
     }
 
 }

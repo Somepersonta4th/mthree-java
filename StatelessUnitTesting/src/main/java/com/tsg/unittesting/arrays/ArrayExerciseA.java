@@ -22,7 +22,13 @@ public class ArrayExerciseA {
      * @return int max
      */
     public static int maxOfArray(int[] numbers){
-        throw new UnsupportedOperationException("Code not yet written...!");
+        int max = numbers[0];
+        for (int num : numbers) {
+            if (num>max) {
+                max = num;
+            }
+        }
+        return max;
     }
     
 }

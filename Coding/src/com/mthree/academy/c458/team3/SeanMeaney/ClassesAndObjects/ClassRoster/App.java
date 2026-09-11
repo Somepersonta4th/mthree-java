@@ -9,11 +9,11 @@ import com.mthree.academy.c458.team3.SeanMeaney.ClassesAndObjects.ClassRoster.ui
 
 public class App {
 
-    private UserIO io = new UserIOConsoleImpl();
-    private ClassRosterView consoleView = new ClassRosterView(io);
-    private ClassRosterDao fileDao = new ClassRosterDaoFileImpl();
-
     public void run() {
+        UserIO io = new UserIOConsoleImpl();
+        ClassRosterView consoleView = new ClassRosterView(io);
+        ClassRosterDao fileDao = new ClassRosterDaoFileImpl();
+
         ClassRosterController controller = new ClassRosterController(consoleView, fileDao);
         controller.run();
     }

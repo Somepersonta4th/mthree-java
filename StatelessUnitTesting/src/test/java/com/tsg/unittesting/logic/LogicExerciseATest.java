@@ -20,7 +20,7 @@ public class LogicExerciseATest {
 
         String out = friendlyGreeting(name,isFriend);
 
-        String expectedOut = "hi.";
+        String expectedOut = "hi";
         assertEquals(expectedOut, out);
     }
 

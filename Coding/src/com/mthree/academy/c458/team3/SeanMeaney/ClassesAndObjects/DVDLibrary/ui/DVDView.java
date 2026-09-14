@@ -72,4 +72,8 @@ public class DVDView {
         dvd.setUserRating(userRating);
         return dvd;
     }
+
+    public void displayRemoveDVDBanner() {io.print("=== Remove DVD ===");}
+
+    public String getDVDTitleChoice() {return io.readString("Please enter the DVD title.");}
 }

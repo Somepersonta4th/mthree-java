@@ -46,7 +46,10 @@ public class DVDController {
         }
     }
 
-    private void removeDVD() {
+    private void removeDVD() throws DVDPersistenceException {
+        view.displayRemoveDVDBanner();
+        String title = view.getDVDTitleChoice();
+        serviceLayer.removeDVD(title);
     }
 
     private void viewDVD() throws DVDPersistenceException {

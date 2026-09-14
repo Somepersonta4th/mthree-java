@@ -1,5 +1,7 @@
 package com.mthree.academy.c458.team3.SeanMeaney.ClassesAndObjects.DVDLibrary.dto;
 
+import java.util.Objects;
+
 public class DVD {
     private String title;
     private String releaseDate;
@@ -67,5 +69,17 @@ public class DVD {
 
     public void setUserNote(String userNote) {
         this.userNote = userNote;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (o == null || getClass() != o.getClass()) return false;
+        DVD dvd = (DVD) o;
+        return Objects.equals(title, dvd.title) && Objects.equals(releaseDate, dvd.releaseDate) && Objects.equals(MPAARating, dvd.MPAARating) && Objects.equals(director, dvd.director) && Objects.equals(studio, dvd.studio) && Objects.equals(userRating, dvd.userRating) && Objects.equals(userNote, dvd.userNote);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(title, releaseDate, MPAARating, director, studio, userRating, userNote);
     }
 }

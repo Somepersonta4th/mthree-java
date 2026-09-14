@@ -100,7 +100,7 @@ public class ClassRosterDaoFileImpl implements ClassRosterDao {
         String currentLine;
         // currentStudent holds the most recent student unmarshalled
         Student currentStudent;
-        // Go through ROSTER_FILE line by line, decoding each line into a
+        // Go through DVDS_FILE line by line, decoding each line into a
         // Student object by calling the unmarshallStudent method.
         // Process while we have more lines in the file
         while (scanner.hasNextLine()) {
@@ -144,7 +144,7 @@ public class ClassRosterDaoFileImpl implements ClassRosterDao {
     }
 
     /**
-     * Writes all students in the roster out to a ROSTER_FILE.  See loadRoster
+     * Writes all students in the roster out to a DVDS_FILE.  See loadRoster
      * for file format.
      *
      * @throws ClassRosterPersistenceException if an error occurs writing to the file

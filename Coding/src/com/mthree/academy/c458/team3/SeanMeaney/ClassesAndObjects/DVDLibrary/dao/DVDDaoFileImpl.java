@@ -1,6 +1,5 @@
 package com.mthree.academy.c458.team3.SeanMeaney.ClassesAndObjects.DVDLibrary.dao;
 
-import com.mthree.academy.c458.team3.SeanMeaney.ClassesAndObjects.ClassRoster.dao.ClassRosterPersistenceException;
 import com.mthree.academy.c458.team3.SeanMeaney.ClassesAndObjects.DVDLibrary.dto.DVD;
 
 import java.io.*;
@@ -9,8 +8,16 @@ import java.util.*;
 public class DVDDaoFileImpl implements DVDDao{
 
     private Map<String, DVD> dvds = new HashMap<>();
-    public static final String ROSTER_FILE = "src/com/mthree/academy/c458/team3/SeanMeaney/ClassesAndObjects/DVDLibrary/dvd.txt";
-    public static final String DELIMITER = "::";
+    public final String DVDS_FILE;
+    public final String DELIMITER = "::";
+
+    public DVDDaoFileImpl() {
+        DVDS_FILE = "src/com/mthree/academy/c458/team3/SeanMeaney/ClassesAndObjects/DVDLibrary/dvd.txt";
+    }
+
+    public DVDDaoFileImpl(String dvdFilePath) {
+        DVDS_FILE = dvdFilePath;
+    }
 
     @Override
     public DVD addDVD(String title, DVD dvd) throws DVDPersistenceException {
@@ -46,7 +53,7 @@ public class DVDDaoFileImpl implements DVDDao{
         try {
             scanner = new Scanner(
                     new BufferedReader(
-                            new FileReader(ROSTER_FILE)));
+                            new FileReader(DVDS_FILE)));
         } catch (FileNotFoundException e) {
             throw new DVDPersistenceException(
                     "-_- Could not load roster data into memory.", e);
@@ -68,7 +75,7 @@ public class DVDDaoFileImpl implements DVDDao{
         PrintWriter out;
 
         try {
-            out = new PrintWriter(new FileWriter(ROSTER_FILE));
+            out = new PrintWriter(new FileWriter(DVDS_FILE));
         } catch (IOException e) {
             throw new DVDPersistenceException(
                     "Could not save student data.", e);

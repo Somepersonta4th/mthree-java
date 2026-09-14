@@ -10,6 +10,10 @@ public class DVDView {
 
     private UserIO io;
 
+    public DVDView(UserIO io) {
+        this.io = io;
+    }
+
     public int printMenuAndGetSelection() {
         io.print("Main Menu");
         io.print("1. List dvds");
@@ -56,13 +60,13 @@ public class DVDView {
     }
 
     public DVD getNewDVDInfo() {
-        String title = io.readString("Please enter Student ID");
-        String releaseDate = io.readString("Please enter First Name");
-        String director = io.readString("Please enter Last Name");
-        String MPAARating = io.readString("Please enter Cohort");
-        String studio = io.readString("Please enter Cohort");
-        String userRating = io.readString("Please enter Cohort");
-        String userNote = io.readString("Please enter Cohort");
+        String title = io.readString("Please enter DVD title");
+        String releaseDate = io.readString("Please enter release date");
+        String director = io.readString("Please enter director name");
+        String MPAARating = io.readString("Please enter MPAA rating");
+        String studio = io.readString("Please enter studio name");
+        String userRating = io.readString("Please enter user's rating");
+        String userNote = io.readString("Please enter user's note");
         DVD dvd = new DVD(title);
         dvd.setStudio(studio);
         dvd.setDirector(director);

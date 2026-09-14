@@ -1,5 +1,6 @@
 package com.mthree.academy.c458.team3.SeanMeaney.ClassesAndObjects.DVDLibrary.ui;
 
+import com.mthree.academy.c458.team3.SeanMeaney.ClassesAndObjects.ClassRoster.dto.Student;
 import com.mthree.academy.c458.team3.SeanMeaney.ClassesAndObjects.ClassRoster.ui.UserIO;
 import com.mthree.academy.c458.team3.SeanMeaney.ClassesAndObjects.DVDLibrary.dto.DVD;
 
@@ -43,5 +44,32 @@ public class DVDView {
             io.print(studentInfo);
         }
         io.readString("Please hit enter to continue.");
+    }
+
+    public void displayAddDVDBanner() {io.print("=== New DVD ===");}
+
+    public void displayAddSuccessBanner() {io.readString("Student successfully created.  Please hit enter to continue");}
+
+    public void displayErrorMessage(String message) {
+        io.print("=== ERROR ===");
+        io.print(message);
+    }
+
+    public DVD getNewDVDInfo() {
+        String title = io.readString("Please enter Student ID");
+        String releaseDate = io.readString("Please enter First Name");
+        String director = io.readString("Please enter Last Name");
+        String MPAARating = io.readString("Please enter Cohort");
+        String studio = io.readString("Please enter Cohort");
+        String userRating = io.readString("Please enter Cohort");
+        String userNote = io.readString("Please enter Cohort");
+        DVD dvd = new DVD(title);
+        dvd.setStudio(studio);
+        dvd.setDirector(director);
+        dvd.setReleaseDate(releaseDate);
+        dvd.setMPAARating(MPAARating);
+        dvd.setUserNote(userNote);
+        dvd.setUserRating(userRating);
+        return dvd;
     }
 }

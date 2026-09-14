@@ -1,9 +1,13 @@
 package com.mthree.academy.c458.team3.SeanMeaney.ClassesAndObjects.DVDLibrary.controller;
 
+import com.mthree.academy.c458.team3.SeanMeaney.ClassesAndObjects.ClassRoster.dto.Student;
+import com.mthree.academy.c458.team3.SeanMeaney.ClassesAndObjects.ClassRoster.service.ClassRosterDataValidationException;
+import com.mthree.academy.c458.team3.SeanMeaney.ClassesAndObjects.ClassRoster.service.ClassRosterDuplicateIdException;
 import com.mthree.academy.c458.team3.SeanMeaney.ClassesAndObjects.ClassRoster.ui.UserIO;
 import com.mthree.academy.c458.team3.SeanMeaney.ClassesAndObjects.ClassRoster.ui.UserIOConsoleImpl;
 import com.mthree.academy.c458.team3.SeanMeaney.ClassesAndObjects.DVDLibrary.dao.DVDDao;
 import com.mthree.academy.c458.team3.SeanMeaney.ClassesAndObjects.DVDLibrary.dao.DVDPersistenceException;
+import com.mthree.academy.c458.team3.SeanMeaney.ClassesAndObjects.DVDLibrary.dto.DVD;
 import com.mthree.academy.c458.team3.SeanMeaney.ClassesAndObjects.DVDLibrary.service.DVDServiceLayer;
 import com.mthree.academy.c458.team3.SeanMeaney.ClassesAndObjects.DVDLibrary.ui.DVDView;
 
@@ -50,7 +54,19 @@ public class DVDController {
     }
 
     private void addDVD() {
-
+        view.displayAddDVDBanner();
+        boolean hasErrors = false;
+        do {
+            DVD dvd = view.getNewDVDInfo();
+            try {
+                serviceLayer.addDVD(dvd);
+                view.displayAddSuccessBanner();
+                hasErrors = false;
+            } catch (DVDPersistenceException e) {
+                hasErrors = true;
+                view.displayErrorMessage(e.getMessage());
+            }
+        } while (hasErrors);
     }
 
     private void listDVDs() throws DVDPersistenceException {

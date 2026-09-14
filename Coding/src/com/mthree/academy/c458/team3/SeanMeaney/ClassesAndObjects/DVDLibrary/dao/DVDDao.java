@@ -6,12 +6,12 @@ import java.util.List;
 
 public interface DVDDao {
 
-    DVD addDVD (String title, DVD dvd);
+    DVD addDVD (String title, DVD dvd) throws DVDPersistenceException;
 
-    DVD removeDVD (String title);
+    DVD removeDVD (String title) throws DVDPersistenceException;
 
-    DVD getDVD (String title);
+    DVD getDVD (String title) throws DVDPersistenceException;
 
-    List<DVD> getAllDVD ();
+    List<DVD> getAllDVD () throws DVDPersistenceException;
 
 }

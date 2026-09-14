@@ -3,12 +3,15 @@ package com.mthree.academy.c458.team3.SeanMeaney.ClassesAndObjects.DVDLibrary.dt
 public class DVD {
     private String title;
     private String releaseDate;
-    private double MPAARating;
+    private String MPAARating;
     private String director;
     private String studio;
-    private double userRating;
+    private String userRating;
     private String userNote;
 
+    public DVD(String title) {
+        this.title = title;
+    }
 
     public String getTitle() {
         return title;
@@ -26,11 +29,11 @@ public class DVD {
         this.releaseDate = releaseDate;
     }
 
-    public double getMPAARating() {
+    public String getMPAARating() {
         return MPAARating;
     }
 
-    public void setMPAARating(double MPAARating) {
+    public void setMPAARating(String MPAARating) {
         this.MPAARating = MPAARating;
     }
 
@@ -50,11 +53,11 @@ public class DVD {
         this.studio = studio;
     }
 
-    public double getUserRating() {
+    public String getUserRating() {
         return userRating;
     }
 
-    public void setUserRating(double userRating) {
+    public void setUserRating(String userRating) {
         this.userRating = userRating;
     }
 

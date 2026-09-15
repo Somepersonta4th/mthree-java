@@ -1,4 +1,4 @@
-package com.mthree.academy.c458.team3.SeanMeaney.ClassesAndObjects.ClassRoster.dao;
+package dao;
 
 import java.io.FileWriter;
 import java.io.IOException;

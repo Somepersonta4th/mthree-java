@@ -1,4 +1,4 @@
-package com.mthree.academy.c458.team3.SeanMeaney.ClassesAndObjects.ClassRoster.service;
+package service;
 
 public class ClassRosterDuplicateIdException extends Exception {
 

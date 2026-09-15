@@ -1,6 +1,7 @@
-package com.mthree.academy.c458.team3.SeanMeaney.ClassesAndObjects.ClassRoster.dao;
+package dao;
 
-import com.mthree.academy.c458.team3.SeanMeaney.ClassesAndObjects.ClassRoster.dto.Student;
+
+import dto.Student;
 
 import java.util.List;
 

@@ -1,14 +1,13 @@
-package com.mthree.academy.c458.team3.SeanMeaney.ClassesAndObjects.ClassRoster.controller;
+package controller;
 
-import com.mthree.academy.c458.team3.SeanMeaney.ClassesAndObjects.ClassRoster.dao.ClassRosterDao;
-import com.mthree.academy.c458.team3.SeanMeaney.ClassesAndObjects.ClassRoster.dao.ClassRosterPersistenceException;
-import com.mthree.academy.c458.team3.SeanMeaney.ClassesAndObjects.ClassRoster.dto.Student;
-import com.mthree.academy.c458.team3.SeanMeaney.ClassesAndObjects.ClassRoster.service.ClassRosterDataValidationException;
-import com.mthree.academy.c458.team3.SeanMeaney.ClassesAndObjects.ClassRoster.service.ClassRosterDuplicateIdException;
-import com.mthree.academy.c458.team3.SeanMeaney.ClassesAndObjects.ClassRoster.service.ClassRosterServiceLayer;
-import com.mthree.academy.c458.team3.SeanMeaney.ClassesAndObjects.ClassRoster.ui.ClassRosterView;
-import com.mthree.academy.c458.team3.SeanMeaney.ClassesAndObjects.ClassRoster.ui.UserIO;
-import com.mthree.academy.c458.team3.SeanMeaney.ClassesAndObjects.ClassRoster.ui.UserIOConsoleImpl;
+import dao.ClassRosterPersistenceException;
+import dto.Student;
+import service.ClassRosterDataValidationException;
+import service.ClassRosterDuplicateIdException;
+import service.ClassRosterServiceLayer;
+import ui.ClassRosterView;
+import ui.UserIO;
+import ui.UserIOConsoleImpl;
 
 import java.util.List;
 

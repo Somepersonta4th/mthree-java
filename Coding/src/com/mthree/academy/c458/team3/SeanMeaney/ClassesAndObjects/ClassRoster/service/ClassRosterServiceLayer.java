@@ -1,7 +1,8 @@
-package com.mthree.academy.c458.team3.SeanMeaney.ClassesAndObjects.ClassRoster.service;
+package service;
 
-import com.mthree.academy.c458.team3.SeanMeaney.ClassesAndObjects.ClassRoster.dao.ClassRosterPersistenceException;
-import com.mthree.academy.c458.team3.SeanMeaney.ClassesAndObjects.ClassRoster.dto.Student;
+
+import dao.ClassRosterPersistenceException;
+import dto.Student;
 
 import java.util.List;
 

@@ -4,6 +4,7 @@
     <modules>
       <module fileurl="file://$PROJECT_DIR$/src/com/mthree/academy/c458/team3/SeanMeaney/ClassesAndObjects/ClassRoster/ClassRoster.iml" filepath="$PROJECT_DIR$/src/com/mthree/academy/c458/team3/SeanMeaney/ClassesAndObjects/ClassRoster/ClassRoster.iml" />
       <module fileurl="file://$PROJECT_DIR$/Coding.iml" filepath="$PROJECT_DIR$/Coding.iml" />
+      <module fileurl="file://$PROJECT_DIR$/src/com/mthree/academy/c458/team3/SeanMeaney/IntermediateJava/java/VendingMachine/VendingMachine.iml" filepath="$PROJECT_DIR$/src/com/mthree/academy/c458/team3/SeanMeaney/IntermediateJava/java/VendingMachine/VendingMachine.iml" />
     </modules>
   </component>
 </project>

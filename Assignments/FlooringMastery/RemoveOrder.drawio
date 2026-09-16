@@ -16,8 +16,26 @@
         <mxCell id="aiiqzBar7RWyPCO17ICv-3" parent="1" style="whiteSpace=wrap;html=1;rounded=1;absoluteArcSize=1;arcSize=14;strokeWidth=2;" value="get order from user" vertex="1">
           <mxGeometry height="60" width="120" x="354" y="550" as="geometry" />
         </mxCell>
+        <mxCell id="j_wYJY-1hGJoefBpKjwM-2" edge="1" parent="1" source="aiiqzBar7RWyPCO17ICv-10" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" target="j_wYJY-1hGJoefBpKjwM-1" value="">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
         <mxCell id="aiiqzBar7RWyPCO17ICv-10" parent="1" style="whiteSpace=wrap;html=1;rounded=1;absoluteArcSize=1;arcSize=14;strokeWidth=2;" value="load order" vertex="1">
           <mxGeometry height="60" width="120" x="354" y="690" as="geometry" />
+        </mxCell>
+        <mxCell id="j_wYJY-1hGJoefBpKjwM-4" edge="1" parent="1" source="j_wYJY-1hGJoefBpKjwM-1" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" target="j_wYJY-1hGJoefBpKjwM-3" value="">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="j_wYJY-1hGJoefBpKjwM-1" parent="1" style="whiteSpace=wrap;html=1;rounded=1;absoluteArcSize=1;arcSize=14;strokeWidth=2;" value="verify with user" vertex="1">
+          <mxGeometry height="60" width="120" x="354" y="830" as="geometry" />
+        </mxCell>
+        <mxCell id="j_wYJY-1hGJoefBpKjwM-6" edge="1" parent="1" source="j_wYJY-1hGJoefBpKjwM-3" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" target="j_wYJY-1hGJoefBpKjwM-5" value="">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="j_wYJY-1hGJoefBpKjwM-3" parent="1" style="whiteSpace=wrap;html=1;rounded=1;absoluteArcSize=1;arcSize=14;strokeWidth=2;" value="remove order" vertex="1">
+          <mxGeometry height="60" width="120" x="354" y="970" as="geometry" />
+        </mxCell>
+        <mxCell id="j_wYJY-1hGJoefBpKjwM-5" parent="1" style="whiteSpace=wrap;html=1;rounded=1;absoluteArcSize=1;arcSize=14;strokeWidth=2;" value="save orders" vertex="1">
+          <mxGeometry height="60" width="120" x="354" y="1110" as="geometry" />
         </mxCell>
       </root>
     </mxGraphModel>

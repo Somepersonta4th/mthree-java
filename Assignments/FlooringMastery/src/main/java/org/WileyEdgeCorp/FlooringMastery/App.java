@@ -9,8 +9,11 @@ confirm on remove
 
 package org.WileyEdgeCorp.FlooringMastery;
 
+import org.WileyEdgeCorp.FlooringMastery.controller.Controller;
+
 public class App {
     public static void main(String[] args) {
-
+        Controller controller = new Controller();
+        controller.run();
     }
 }

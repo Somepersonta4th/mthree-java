@@ -18,7 +18,7 @@ public class Order {
     private BigDecimal tax;
     private BigDecimal total;
 
-    private BigDecimal PERCENT = new BigDecimal("0.01");
+    private final BigDecimal PERCENT = new BigDecimal("0.01");
 
     public int getOrderNumber() {
         return orderNumber;

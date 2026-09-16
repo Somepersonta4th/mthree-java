@@ -58,6 +58,7 @@ public class Order {
 
     public void setTaxRate(BigDecimal taxRate) {
         this.taxRate = taxRate;
+        this.updateCosts();
     }
 
     public String getProductType() {
@@ -74,6 +75,7 @@ public class Order {
 
     public void setCostPerSquareFoot(BigDecimal costPerSquareFoot) {
         this.costPerSquareFoot = costPerSquareFoot;
+        this.updateCosts();
     }
 
     public BigDecimal getLabourCostPerSquareFoot() {
@@ -82,6 +84,7 @@ public class Order {
 
     public void setLabourCostPerSquareFoot(BigDecimal labourCostPerSquareFoot) {
         this.labourCostPerSquareFoot = labourCostPerSquareFoot;
+        this.updateCosts();
     }
 
     public BigDecimal getArea() {

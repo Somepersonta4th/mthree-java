@@ -3,6 +3,8 @@ package org.WileyEdgeCorp.FlooringMastery.dao;
 import org.WileyEdgeCorp.FlooringMastery.dto.Order;
 
 import java.math.BigDecimal;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
@@ -12,9 +14,10 @@ public class OrderDaoStub implements OrderDao {
 
     private Order testOrder;
 
-    public OrderDaoStub() {
+    public OrderDaoStub() throws ParseException {
         testOrder = new Order();
-        testOrder.setOrderDate(new Date(2000, Calendar.FEBRUARY,1));
+        Date date = new SimpleDateFormat("yyyyMMdd").parse("20000101");
+        testOrder.setOrderDate(date);
         testOrder.setOrderNumber(1);
         testOrder.setCustomerName("TestCustomer");
         testOrder.setProductType("TestProduct");

@@ -1,5 +1,6 @@
-package org.WileyEdgeCorp.FlooringMastery.dao;
+package org.WileyEdgeCorp.FlooringMastery.dao.stubs;
 
+import org.WileyEdgeCorp.FlooringMastery.dao.TaxDao;
 import org.WileyEdgeCorp.FlooringMastery.dto.Tax;
 
 import java.math.BigDecimal;

@@ -19,15 +19,15 @@
 
 
     <bean id="ExportStub"
-          class="org.WileyEdgeCorp.FlooringMastery.dao.ExportDaoStub"/>
+          class="org.WileyEdgeCorp.FlooringMastery.dao.stubs.ExportDaoStub"/>
 
     <bean id="OrderStub"
-          class="org.WileyEdgeCorp.FlooringMastery.dao.OrderDaoStub"/>
+          class="org.WileyEdgeCorp.FlooringMastery.dao.stubs.OrderDaoStub"/>
 
     <bean id="ProductStub"
-          class="org.WileyEdgeCorp.FlooringMastery.dao.ProductDaoStub"/>
+          class="org.WileyEdgeCorp.FlooringMastery.dao.stubs.ProductDaoStub"/>
 
     <bean id="TaxStub"
-          class="org.WileyEdgeCorp.FlooringMastery.dao.TaxDaoStub"/>
+          class="org.WileyEdgeCorp.FlooringMastery.dao.stubs.TaxDaoStub"/>
 
 </beans>

@@ -5,19 +5,20 @@ import org.WileyEdgeCorp.FlooringMastery.dto.Product;
 import org.WileyEdgeCorp.FlooringMastery.dto.Tax;
 
 import java.time.LocalDate;
+import java.util.Date;
 import java.util.List;
 
 public interface ServiceLayer {
 
-    public int getNextOrderNumber ();
+    //public int getNextOrderNumber ();
 
     public Order addOrder(Order order);
 
-    public Order getOrder(LocalDate date, int orderNumber);
+    public Order getOrder(Date date, int orderNumber);
 
-    public Order editOrder(LocalDate date, int orderNumber);
+    public Order editOrder(Date date, int orderNumber, Order newOrder);
 
-    public Order removeOrder(LocalDate date, int orderNumber);
+    public Order removeOrder(Date date, int orderNumber);
 
     public void exportData();
 

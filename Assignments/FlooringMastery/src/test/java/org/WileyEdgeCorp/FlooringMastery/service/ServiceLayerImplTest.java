@@ -1,14 +1,12 @@
 package org.WileyEdgeCorp.FlooringMastery.service;
 
-import org.WileyEdgeCorp.FlooringMastery.dao.ExportDao;
-import org.WileyEdgeCorp.FlooringMastery.dao.OrderDao;
-import org.WileyEdgeCorp.FlooringMastery.dao.ProductDao;
-import org.WileyEdgeCorp.FlooringMastery.dao.TaxDao;
+import org.WileyEdgeCorp.FlooringMastery.dao.*;
 import org.WileyEdgeCorp.FlooringMastery.dto.Order;
 import org.WileyEdgeCorp.FlooringMastery.dto.Product;
 import org.WileyEdgeCorp.FlooringMastery.dto.Tax;
+import org.WileyEdgeCorp.FlooringMastery.exceptions.DataCollisionException;
+import org.WileyEdgeCorp.FlooringMastery.exceptions.NoDataLoaded;
 import org.junit.jupiter.api.Assertions;
-import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.context.ApplicationContext;
@@ -117,7 +115,7 @@ class ServiceLayerImplTest {
     }
 
     @Test
-    void getAddOrder() throws ParseException {
+    void getAddOrder() throws ParseException, DataCollisionException {
         //target newOrder
         Date testDate = newOrderDate;
         int testNumber = newOrderNumber;
@@ -129,7 +127,7 @@ class ServiceLayerImplTest {
     }
 
     @Test
-    void getAddOrderCollision() throws ParseException {
+    void getAddOrderCollision() throws ParseException, DataCollisionException {
         //target testOrder
         newOrder.setOrderNumber(1);
 
@@ -190,7 +188,7 @@ class ServiceLayerImplTest {
     }
 
     @Test
-    void getTaxesTest() throws ParseException {
+    void getTaxesTest() throws ParseException, NoDataLoaded {
 
         List<Tax> result = service.getTaxes();
 
@@ -198,7 +196,7 @@ class ServiceLayerImplTest {
     }
 
     @Test
-    void getProductsTest() throws ParseException {
+    void getProductsTest() throws ParseException, NoDataLoaded {
 
 
         List<Product> result = service.getProducts();

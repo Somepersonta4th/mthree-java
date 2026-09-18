@@ -1,12 +1,17 @@
 package org.WileyEdgeCorp.FlooringMastery.controller;
 
+import org.WileyEdgeCorp.FlooringMastery.exceptions.DataCollisionException;
+import org.WileyEdgeCorp.FlooringMastery.exceptions.NoDataLoaded;
 import org.WileyEdgeCorp.FlooringMastery.dto.Order;
 import org.WileyEdgeCorp.FlooringMastery.dto.Product;
 import org.WileyEdgeCorp.FlooringMastery.dto.Tax;
+import org.WileyEdgeCorp.FlooringMastery.exceptions.PersistenceException;
 import org.WileyEdgeCorp.FlooringMastery.service.ServiceLayer;
 import org.WileyEdgeCorp.FlooringMastery.ui.View;
 
+import java.util.Date;
 import java.util.List;
+import java.util.Map;
 
 public class Controller {
     private ServiceLayer service;
@@ -20,8 +25,10 @@ public class Controller {
         this.view = view;
     }
 
-    public void run () {
+    public void run () throws PersistenceException {
         boolean isRunning = true;
+
+        onStart();
 
         //main loop
         while (isRunning){
@@ -44,6 +51,9 @@ public class Controller {
                     exportData();
                     break;
                 case 6:
+                    changeDate();
+                    break;
+                case 7:
                     isRunning = false;
                     break;
                 default:
@@ -52,6 +62,30 @@ public class Controller {
         }
         //finished
         exitMessage();
+    }
+
+    private void onStart() throws PersistenceException {
+        // load and show order numbers for each date
+        Map<Integer,Date> inUseOrderNumbers = null;
+        try {
+            inUseOrderNumbers = service.loadOrderNumbers();
+        } catch (PersistenceException e) {
+            throw new PersistenceException("Fatal: fatal error when loading folder. Could not access folder.",e);
+        }
+        view.displayOrderNumbers(inUseOrderNumbers);
+
+        changeDate();
+    }
+
+    private void changeDate() throws PersistenceException {
+        // select date to use
+        Date dateToUse = view.getDate();
+        // load data for date
+        try {
+            service.loadDate(dateToUse);
+        } catch (PersistenceException e) {
+            throw new PersistenceException("Fatal: fatal error when loading date file. File may be malformed.", e);
+        }
     }
 
     private void unknownSelection() {
@@ -73,13 +107,19 @@ public class Controller {
     private void addOrder() {
         view.displayAddOrderBanner();
 
-        List<Product> products = service.getProducts();
-        if (products.isEmpty()) {
+        //verity products and taxes available
+        List<Product> products = null;
+        try {
+            products = service.getProducts();
+        } catch (NoDataLoaded e) {
             view.displayNoProductsMessage();
             return;
         }
-        List<Tax> taxes = service.getTaxes();
-        if (products.isEmpty()) {
+
+        List<Tax> taxes;
+        try {
+            taxes = service.getTaxes();
+        } catch (NoDataLoaded e) {
             view.displayNoTaxesMessage();
             return;
         }
@@ -97,11 +137,16 @@ public class Controller {
 
         //add order
         view.displayAddingOrderMessage();
-        Order added = service.addOrder(newOrder);
-        if (added == null) {
+        Order added;
+
+        try {
+            added = service.addOrder(newOrder);
+        } catch (DataCollisionException e) {
+            //order number already exist
             view.displayFailedToAddObjectMessage();
             return;
         }
+
         view.displaySuccessfullyAddedObjectMessage();
     }
 

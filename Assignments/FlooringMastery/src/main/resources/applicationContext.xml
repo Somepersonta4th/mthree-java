@@ -24,10 +24,14 @@
           class="org.WileyEdgeCorp.FlooringMastery.dao.OrderDaoFileImpl"/>
 
     <bean id="productDaoFileImpl"
-          class="org.WileyEdgeCorp.FlooringMastery.dao.ProductDaoFileImpl"/>
+          class="org.WileyEdgeCorp.FlooringMastery.dao.ProductDaoFileImpl">
+        <constructor-arg name="filePath" value="src/main/java/org/WileyEdgeCorp/FlooringMastery/Data/Products.txt"/>
+    </bean>
 
     <bean id="taxDaoFileImpl"
-          class="org.WileyEdgeCorp.FlooringMastery.dao.TaxDaoFileImpl"/>
+          class="org.WileyEdgeCorp.FlooringMastery.dao.TaxDaoFileImpl">
+        <constructor-arg name="filePath" value="src/main/java/org/WileyEdgeCorp/FlooringMastery/Data/States.txt"/>
+    </bean>
 
     <bean id="serviceLayerImpl"
           class="org.WileyEdgeCorp.FlooringMastery.service.ServiceLayerImpl">

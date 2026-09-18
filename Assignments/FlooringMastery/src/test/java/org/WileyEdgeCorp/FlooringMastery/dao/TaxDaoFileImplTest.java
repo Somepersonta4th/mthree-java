@@ -1,6 +1,7 @@
 package org.WileyEdgeCorp.FlooringMastery.dao;
 
 import org.WileyEdgeCorp.FlooringMastery.dto.Tax;
+import org.WileyEdgeCorp.FlooringMastery.exceptions.PersistenceException;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -27,7 +28,7 @@ public class TaxDaoFileImplTest {
             TS::TestState::4.45""";
 
     @BeforeEach
-    public void setUp() throws IOException {
+    public void setUp() throws IOException, PersistenceException {
         // create dao
         taxDao = new TaxDaoFileImpl(testFile);
 

@@ -11,11 +11,12 @@ use lambdas
 package org.WileyEdgeCorp.FlooringMastery;
 
 import org.WileyEdgeCorp.FlooringMastery.controller.Controller;
+import org.WileyEdgeCorp.FlooringMastery.exceptions.PersistenceException;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
 
 public class App {
-    public static void main(String[] args) {
+    public static void main(String[] args) throws PersistenceException {
 
         ApplicationContext ctx = new ClassPathXmlApplicationContext("applicationContext.xml");
 

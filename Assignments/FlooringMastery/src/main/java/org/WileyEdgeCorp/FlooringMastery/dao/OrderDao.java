@@ -1,8 +1,8 @@
 package org.WileyEdgeCorp.FlooringMastery.dao;
 
 import org.WileyEdgeCorp.FlooringMastery.dto.Order;
+import org.WileyEdgeCorp.FlooringMastery.exceptions.PersistenceException;
 
-import java.time.LocalDate;
 import java.util.Date;
 import java.util.List;
 import java.util.Map;
@@ -21,4 +21,7 @@ public interface OrderDao {
 
     public Order removeOrder(Date orderDate, int orderNumber);
 
+    void loadDate(Date date) throws PersistenceException;
+
+    Map<Integer, Date> loadOrderNumbers() throws PersistenceException;
 }

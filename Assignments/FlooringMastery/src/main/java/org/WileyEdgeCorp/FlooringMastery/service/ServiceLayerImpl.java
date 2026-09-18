@@ -4,9 +4,13 @@ import org.WileyEdgeCorp.FlooringMastery.dao.*;
 import org.WileyEdgeCorp.FlooringMastery.dto.Order;
 import org.WileyEdgeCorp.FlooringMastery.dto.Product;
 import org.WileyEdgeCorp.FlooringMastery.dto.Tax;
+import org.WileyEdgeCorp.FlooringMastery.exceptions.DataCollisionException;
+import org.WileyEdgeCorp.FlooringMastery.exceptions.NoDataLoaded;
+import org.WileyEdgeCorp.FlooringMastery.exceptions.PersistenceException;
 
 import java.util.Date;
 import java.util.List;
+import java.util.Map;
 
 public class ServiceLayerImpl implements ServiceLayer {
 
@@ -32,8 +36,12 @@ public class ServiceLayerImpl implements ServiceLayer {
      */
 
     @Override
-    public Order addOrder(Order order) {
-        return null;
+    public Order addOrder(Order order) throws DataCollisionException {
+        Order added = orderDao.addOrder(order);
+        if (added == null) {
+            throw new DataCollisionException("order number already in use");
+        }
+        return orderDao.addOrder(order);
     }
 
     @Override
@@ -55,12 +63,30 @@ public class ServiceLayerImpl implements ServiceLayer {
     public void exportData() {}
 
     @Override
-    public List<Tax> getTaxes() {
-        return List.of();
+    public List<Tax> getTaxes() throws NoDataLoaded {
+        List<Tax> taxes = taxDao.getAllTaxes();
+        if (taxes.isEmpty()) {
+            throw new NoDataLoaded("no taxes loaded");
+        }
+        return taxes;
     }
 
     @Override
-    public List<Product> getProducts() {
-        return List.of();
+    public List<Product> getProducts() throws NoDataLoaded {
+        List<Product> products = productDao.getAllProducts();
+        if (products.isEmpty()) {
+            throw new NoDataLoaded("no products loaded");
+        }
+        return products;
+    }
+
+    @Override
+    public Map<Integer, Date> loadOrderNumbers() throws PersistenceException {
+        return orderDao.loadOrderNumbers();
+    }
+
+    @Override
+    public void loadDate(Date dateToUse) throws PersistenceException {
+        orderDao.loadDate(dateToUse);
     }
 }

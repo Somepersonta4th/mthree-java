@@ -1,7 +1,7 @@
 package org.WileyEdgeCorp.FlooringMastery.dao;
 
-import org.WileyEdgeCorp.FlooringMastery.dto.Order;
 import org.WileyEdgeCorp.FlooringMastery.dto.Product;
+import org.WileyEdgeCorp.FlooringMastery.exceptions.PersistenceException;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -29,7 +29,7 @@ public class ProductDaoFileImplTest {
             TestProduct::1::2""";
 
     @BeforeEach
-    public void setUp() throws IOException {
+    public void setUp() throws IOException, PersistenceException {
         // create dao
         productDao = new ProductDaoFileImpl(testFile);
 

@@ -5,7 +5,9 @@ import org.WileyEdgeCorp.FlooringMastery.dto.Product;
 import org.WileyEdgeCorp.FlooringMastery.dto.Tax;
 
 import java.math.BigDecimal;
+import java.util.Date;
 import java.util.List;
+import java.util.Map;
 
 public class View {
     private UserIO IO;
@@ -25,7 +27,8 @@ public class View {
                   * 3. Edit an Order
                   * 4. Remove an Order
                   * 5. Export All Data
-                  * 6. Quit
+                  * 6. Change Date
+                  * 7. Quit
                   *
                   * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
                 """);
@@ -80,8 +83,8 @@ public class View {
 
     //display each product in list
     public void displayProducts (List<Product> products) {
-        for (int i = 0; i < products.size();) {
-            IO.print(++i + ".");
+        for (int i = 0; i < products.size(); i++) {
+            IO.print((i+1) + ".");
             Product product = products.get(i);
             IO.print("Product type : " + product.getProductType());
             IO.print("Material cost per square foot : $" + product.getCostPerSquareFoot());
@@ -92,8 +95,8 @@ public class View {
 
     //display tax for each state in list
     public void displayTaxes (List<Tax> taxes) {
-        for (int i = 0; i < taxes.size();) {
-            IO.print(++i + ".");
+        for (int i = 0; i < taxes.size(); i++) {
+            IO.print((i+1) + ".");
             Tax tax = taxes.get(i);
             IO.print("State : " + tax.getState());
             IO.print("State tax rate : $" + tax.getTaxRate() + "%");
@@ -106,10 +109,17 @@ public class View {
         Order newOrder = new Order();
 
         //get order info
-        newOrder.setOrderDate(IO.readDate("What date is the order for?"));
+        //newOrder.setOrderDate(IO.readDate("What date is the order for?"));
         newOrder.setOrderNumber(IO.readInt("Order number:",0));
         newOrder.setCustomerName(IO.readString("Customer name:"));
         newOrder.setArea(IO.readBigDecimal("Square foot area required:"));
+
+        //min area
+        if (newOrder.getArea().doubleValue() < 100) {
+            IO.print("Minium area of 100 square feet. Area set to 100 square feet.");
+            newOrder.setArea(new BigDecimal("100"));
+            IO.readString("Hit enter to continue");
+        }
 
         //show products and get selection
         IO.print("\nAvailable products\n");
@@ -129,7 +139,22 @@ public class View {
         return newOrder;
     }
 
-    public void displayNoProductsMessage() {IO.print("Error: no product data loaded.");}
+    public void displayNoProductsMessage() {IO.readString("Error: no product data loaded. Hit enter to continue");}
 
-    public void displayNoTaxesMessage() {IO.print("Error: no state data loaded.");}
+    public void displayNoTaxesMessage() {IO.readString("Error: no state data loaded. Hit enter to continue");}
+
+    public void displayOrderNumbers(Map<Integer, Date> inUseOrderNumbers) {
+        if (inUseOrderNumbers.isEmpty()) {
+            IO.print("No orders on record.");
+            return;
+        }
+        IO.print("All orders on record:");
+        for (int orderNumber : inUseOrderNumbers.keySet()) {
+            IO.print("Order number - " + orderNumber + "            Order date - " + inUseOrderNumbers.get(orderNumber));
+        }
+    }
+
+    public Date getDate() {
+        return IO.readDate("Please enter the date you wish to select.");
+    }
 }

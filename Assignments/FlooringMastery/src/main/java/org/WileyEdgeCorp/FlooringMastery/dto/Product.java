@@ -9,6 +9,7 @@ public class Product {
 
     public Product(){}
 
+    //set properties on instantiation
     public Product(String productType, BigDecimal costPerSquareFoot, BigDecimal labourCostPerSquareFoot) {
         this.productType = productType;
         this.costPerSquareFoot = costPerSquareFoot;

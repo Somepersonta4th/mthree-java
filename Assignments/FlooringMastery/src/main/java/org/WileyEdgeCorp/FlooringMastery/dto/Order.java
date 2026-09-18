@@ -18,8 +18,12 @@ public class Order {
     private BigDecimal tax;
     private BigDecimal total;
 
+    //for percent conversion
     private final BigDecimal PERCENT = new BigDecimal("0.01");
 
+    public Order() {}
+
+    //getters + setters*
     public int getOrderNumber() {
         return orderNumber;
     }
@@ -111,13 +115,32 @@ public class Order {
     public BigDecimal getTotal() {
         return total;
     }
+    //*getters + setters
 
     private void updateCosts() {
+
+        //dont calculate if no values
+        if (area == null
+        || costPerSquareFoot == null
+        || labourCostPerSquareFoot == null) {
+            return;
+        }
+
+        //calculate costs
         this.materialCost = area.multiply(costPerSquareFoot);
         this.labourCost = area.multiply(labourCostPerSquareFoot);
+
+        //dont calculate if no values
+        if (taxRate == null) {
+            return;
+        }
+
+        //calculate tax
         this.tax = materialCost
                 .add(labourCost)
                 .multiply(taxRate.multiply(PERCENT));
+
+        //calculate total
         this.total = materialCost
                 .add(labourCost)
                 .add(tax);

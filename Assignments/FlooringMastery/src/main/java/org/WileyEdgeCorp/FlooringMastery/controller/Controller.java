@@ -1,8 +1,12 @@
 package org.WileyEdgeCorp.FlooringMastery.controller;
 
-import jdk.jshell.spi.ExecutionControl;
+import org.WileyEdgeCorp.FlooringMastery.dto.Order;
+import org.WileyEdgeCorp.FlooringMastery.dto.Product;
+import org.WileyEdgeCorp.FlooringMastery.dto.Tax;
 import org.WileyEdgeCorp.FlooringMastery.service.ServiceLayer;
 import org.WileyEdgeCorp.FlooringMastery.ui.View;
+
+import java.util.List;
 
 public class Controller {
     private ServiceLayer service;
@@ -18,26 +22,91 @@ public class Controller {
 
     public void run () {
         boolean isRunning = true;
+
+        //main loop
         while (isRunning){
+
+            //main menu
             switch (showMenuAndGetSelection()) {
                 case 1:
-                    throw new UnsupportedOperationException("");
+                    displayOrder();
+                    break;
                 case 2:
-                    throw new UnsupportedOperationException("");
+                    addOrder();
+                    break;
                 case 3:
-                    throw new UnsupportedOperationException("");
+                    editOrder();
+                    break;
                 case 4:
-                    throw new UnsupportedOperationException("");
+                    removeOrder();
+                    break;
                 case 5:
-                    throw new UnsupportedOperationException("");
+                    exportData();
+                    break;
                 case 6:
                     isRunning = false;
                     break;
                 default:
-                    throw new UnsupportedOperationException("");
+                    unknownSelection();
             }
         }
+        //finished
         exitMessage();
+    }
+
+    private void unknownSelection() {
+        throw new UnsupportedOperationException("");
+    }
+
+    private void exportData() {
+        throw new UnsupportedOperationException("");
+    }
+
+    private void removeOrder() {
+        throw new UnsupportedOperationException("");
+    }
+
+    private void editOrder() {
+        throw new UnsupportedOperationException("");
+    }
+
+    private void addOrder() {
+        view.displayAddOrderBanner();
+
+        List<Product> products = service.getProducts();
+        if (products.isEmpty()) {
+            view.displayNoProductsMessage();
+            return;
+        }
+        List<Tax> taxes = service.getTaxes();
+        if (products.isEmpty()) {
+            view.displayNoTaxesMessage();
+            return;
+        }
+
+        //get properties from user
+        Order newOrder = view.createOrder(products,taxes);
+
+        //confirm order details
+        boolean confirmAdd = view.confirmAddOrder(newOrder);
+        if (!confirmAdd) {
+            //do not add order
+            view.displayNotAddingOrderMessage();
+            return;
+        }
+
+        //add order
+        view.displayAddingOrderMessage();
+        Order added = service.addOrder(newOrder);
+        if (added == null) {
+            view.displayFailedToAddObjectMessage();
+            return;
+        }
+        view.displaySuccessfullyAddedObjectMessage();
+    }
+
+    private void displayOrder() {
+        throw new UnsupportedOperationException("");
     }
 
     private void exitMessage() {

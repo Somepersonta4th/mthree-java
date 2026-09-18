@@ -9,6 +9,7 @@ public class Tax {
 
     public Tax (){};
 
+    //set properties on instantiation
     public Tax(String state, String stateAbbreviation, BigDecimal taxRate) {
         this.state = state;
         this.stateAbbreviation = stateAbbreviation;

@@ -17,4 +17,38 @@
 
     <!-- Bean definitions go here -->
 
+    <bean id="exportDaoFileImpl"
+          class="org.WileyEdgeCorp.FlooringMastery.dao.ExportDaoFileImpl"/>
+
+    <bean id="orderDaoFileImpl"
+          class="org.WileyEdgeCorp.FlooringMastery.dao.OrderDaoFileImpl"/>
+
+    <bean id="productDaoFileImpl"
+          class="org.WileyEdgeCorp.FlooringMastery.dao.ProductDaoFileImpl"/>
+
+    <bean id="taxDaoFileImpl"
+          class="org.WileyEdgeCorp.FlooringMastery.dao.TaxDaoFileImpl"/>
+
+    <bean id="serviceLayerImpl"
+          class="org.WileyEdgeCorp.FlooringMastery.service.ServiceLayerImpl">
+        <constructor-arg ref="exportDaoFileImpl"/>
+        <constructor-arg ref="orderDaoFileImpl"/>
+        <constructor-arg ref="productDaoFileImpl"/>
+        <constructor-arg ref="taxDaoFileImpl"/>
+    </bean>
+
+    <bean id="userIOConsoleImpl"
+          class="org.WileyEdgeCorp.FlooringMastery.ui.UserIOConsoleImpl"/>
+
+    <bean id="view"
+          class="org.WileyEdgeCorp.FlooringMastery.ui.View">
+    <constructor-arg ref="userIOConsoleImpl" />
+    </bean>
+
+    <bean id="controller"
+          class="org.WileyEdgeCorp.FlooringMastery.controller.Controller">
+        <constructor-arg ref="serviceLayerImpl" />
+        <constructor-arg ref="view" />
+    </bean>
+
 </beans>

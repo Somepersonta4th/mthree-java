@@ -3,6 +3,12 @@ package org.WileyEdgeCorp.FlooringMastery.ui;
 public class View {
     private UserIO IO;
 
+    public View () {}
+
+    public View(UserIO IO) {
+        this.IO = IO;
+    }
+
     public int showMenuAndGetSelection() {
         IO.print("""
                   * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
@@ -17,5 +23,9 @@ public class View {
                   * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
                 """);
         return IO.readInt("Enter Selection:");
+    }
+
+    public void displayExitMessage() {
+        IO.print("Quiting...");
     }
 }

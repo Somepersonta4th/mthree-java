@@ -15,6 +15,15 @@ public class ServiceLayerImpl implements ServiceLayer {
     private ProductDao productDao;
     private TaxDao taxDao;
 
+    public ServiceLayerImpl () {}
+
+    public ServiceLayerImpl(ExportDao exportDao, OrderDao orderDao, ProductDao productDao, TaxDao taxDao) {
+        this.exportDao = exportDao;
+        this.orderDao = orderDao;
+        this.productDao = productDao;
+        this.taxDao = taxDao;
+    }
+
     /*
     @Override
     public int getNextOrderNumber() {

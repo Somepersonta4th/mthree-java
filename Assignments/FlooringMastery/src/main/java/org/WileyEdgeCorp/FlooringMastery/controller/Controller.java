@@ -8,6 +8,14 @@ public class Controller {
     private ServiceLayer service;
     private View view;
 
+    public Controller() {
+    }
+
+    public Controller(ServiceLayer service, View view) {
+        this.service = service;
+        this.view = view;
+    }
+
     public void run () {
         boolean isRunning = true;
         while (isRunning){
@@ -18,11 +26,22 @@ public class Controller {
                     throw new UnsupportedOperationException("");
                 case 3:
                     throw new UnsupportedOperationException("");
-                default:
+                case 4:
+                    throw new UnsupportedOperationException("");
+                case 5:
+                    throw new UnsupportedOperationException("");
+                case 6:
+                    isRunning = false;
                     break;
+                default:
+                    throw new UnsupportedOperationException("");
             }
-            isRunning = false;
         }
+        exitMessage();
+    }
+
+    private void exitMessage() {
+        view.displayExitMessage();
     }
 
     public int showMenuAndGetSelection () {

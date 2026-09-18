@@ -11,10 +11,16 @@ use lambdas
 package org.WileyEdgeCorp.FlooringMastery;
 
 import org.WileyEdgeCorp.FlooringMastery.controller.Controller;
+import org.springframework.context.ApplicationContext;
+import org.springframework.context.support.ClassPathXmlApplicationContext;
 
 public class App {
     public static void main(String[] args) {
-        Controller controller = new Controller();
+
+        ApplicationContext ctx = new ClassPathXmlApplicationContext("applicationContext.xml");
+
+        Controller controller = ctx.getBean("controller", Controller.class);
+
         controller.run();
     }
 }

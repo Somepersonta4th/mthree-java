@@ -17,6 +17,8 @@ public class Controller {
     private ServiceLayer service;
     private View view;
 
+    private Date inUseDate;
+
     public Controller() {
     }
 
@@ -75,16 +77,28 @@ public class Controller {
         view.displayOrderNumbers(inUseOrderNumbers);
 
         changeDate();
+        while (inUseDate == null) {
+            view.displayDateCannotBeNullMessage();
+            changeDate();
+        }
+
     }
 
     private void changeDate() throws PersistenceException {
         // select date to use
-        Date dateToUse = view.getDate();
+        Date dateToUse = view.getNewDate();
+
+        // if date unchanged
+        if (dateToUse == null
+        || dateToUse.equals(inUseDate)) {
+            return;
+        }
+
         // load data for date
         try {
             service.loadDate(dateToUse);
         } catch (PersistenceException e) {
-            throw new PersistenceException("Fatal: fatal error when loading date file. File may be malformed.", e);
+            throw new PersistenceException("Fatal: fatal error when loading date file. Either file cannot be created or file exists but may be malformed.", e);
         }
     }
 

@@ -66,11 +66,16 @@ public class UserIOConsoleImpl implements UserIO{
 
     //gets Date type
     //requires format yyyy/MM/dd
+    //return null if blank
     @Override
     public Date readDate(String s) {
         while (true) {
             try {
-                return new SimpleDateFormat("yyyy/MM/dd").parse(readString("Enter date. Use yyyy/MM/dd format."));
+                String newDateString = readString("Enter date. Use yyyy/MM/dd format.");
+                if (newDateString.equals("")) {
+                    return null;
+                }
+                return new SimpleDateFormat("yyyy/MM/dd").parse(newDateString);
             } catch (ParseException ex) {
                 print("Invalid date format. Please try again.");
             }

@@ -154,7 +154,9 @@ public class View {
         }
     }
 
-    public Date getDate() {
-        return IO.readDate("Please enter the date you wish to select.");
+    public Date getNewDate() {
+        return IO.readDate("Please enter the date you wish to select and export current data. Enter blank to cancel.");
     }
+
+    public void displayDateCannotBeNullMessage() {IO.print("Initial date cannot be blank.");}
 }

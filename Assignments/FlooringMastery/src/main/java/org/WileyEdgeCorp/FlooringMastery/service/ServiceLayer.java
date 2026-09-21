@@ -5,6 +5,7 @@ import org.WileyEdgeCorp.FlooringMastery.exceptions.NoDataLoaded;
 import org.WileyEdgeCorp.FlooringMastery.dto.Order;
 import org.WileyEdgeCorp.FlooringMastery.dto.Product;
 import org.WileyEdgeCorp.FlooringMastery.dto.Tax;
+import org.WileyEdgeCorp.FlooringMastery.exceptions.NoSuchOrderException;
 import org.WileyEdgeCorp.FlooringMastery.exceptions.PersistenceException;
 
 import java.util.Date;
@@ -17,13 +18,15 @@ public interface ServiceLayer {
 
     public Order addOrder(Order order) throws DataCollisionException;
 
-    public Order getOrder(Date date, int orderNumber);
+    public Order getOrder(int orderNumber);
 
-    public Order editOrder(Date date, int orderNumber, Order newOrder);
+    public List<Order> getOrders();
 
-    public Order removeOrder(Date date, int orderNumber);
+    public Order editOrder(Order newOrder) throws  NoSuchOrderException;
 
-    public void exportData();
+    public Order removeOrder(int orderNumber);
+
+    public void exportData() throws PersistenceException;
 
     public List<Tax> getTaxes() throws NoDataLoaded;
 

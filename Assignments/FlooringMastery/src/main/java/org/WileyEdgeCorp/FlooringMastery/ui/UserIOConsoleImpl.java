@@ -44,11 +44,50 @@ public class UserIOConsoleImpl implements UserIO{
     }
 
     @Override
+    public int readInt(String prompt, int min, boolean canBeEmpty) {
+        System.out.println(prompt);
+        while (true) {
+            try {
+                String raw = SCANNER.nextLine();
+                if (canBeEmpty && raw.isEmpty()) {
+                    return -1;
+                }
+                int newInt = Integer.parseInt(raw);
+                if (newInt>min) {
+                    return newInt;
+                }
+                System.out.println("Int must be positive");
+            } catch (NumberFormatException ignored) {}
+
+            System.out.println("Invalid int");
+        }
+    }
+
+    @Override
     public int readInt(String prompt, int min, int max) {
         System.out.println(prompt);
         while (true) {
             try {
                 int in = Integer.parseInt(SCANNER.nextLine());
+                if (in>=min && in<=max) {
+                    return in;
+                }
+            } catch (NumberFormatException ignored) {}
+
+            System.out.println("Invalid int");
+        }
+    }
+
+    @Override
+    public int readInt(String prompt, int min, int max, boolean canBeEmpty) {
+        System.out.println(prompt);
+        while (true) {
+            try {
+                String raw = SCANNER.nextLine();
+                if (canBeEmpty && raw.isEmpty()) {
+                    return -1;
+                }
+                int in = Integer.parseInt(raw);
                 if (in>=min && in<=max) {
                     return in;
                 }
@@ -88,6 +127,22 @@ public class UserIOConsoleImpl implements UserIO{
             try {
                 print(s);
                 return new BigDecimal(SCANNER.nextLine());
+            } catch (NumberFormatException ex) {
+                print("Invalid number. Please try again.");
+            }
+        }
+    }
+
+    @Override
+    public BigDecimal readBigDecimal(String s, boolean canBeEmpty) {
+        while (true) {
+            try {
+                print(s);
+                String raw = SCANNER.nextLine();
+                if (canBeEmpty && raw.equals("")){
+                    return null;
+                }
+                return new BigDecimal(raw);
             } catch (NumberFormatException ex) {
                 print("Invalid number. Please try again.");
             }

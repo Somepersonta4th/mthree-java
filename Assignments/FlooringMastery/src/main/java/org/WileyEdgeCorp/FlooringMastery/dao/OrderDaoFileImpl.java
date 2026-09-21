@@ -6,6 +6,7 @@ import org.WileyEdgeCorp.FlooringMastery.exceptions.PersistenceException;
 import java.io.*;
 import java.math.BigDecimal;
 import java.text.Format;
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.*;
 import java.util.regex.Pattern;
@@ -13,9 +14,12 @@ import java.util.regex.Pattern;
 public class OrderDaoFileImpl implements OrderDao {
 
     private Date currentDate;
+    
     private String FILE_PATH = "src/main/java/org/WileyEdgeCorp/FlooringMastery/Data/Orders/";
     private String FILE_PARAMETERS = "OrderNumber::CustomerName::State::TaxRate::ProductType::Area::CostPerSquareFoot::LaborCostPerSquareFoot::MaterialCost::LaborCost::Tax::Total";
     private final String DELIMITER = "::";
+    private final Format DATE_FORMATER = new SimpleDateFormat("MMddyyyy");
+    
     // Map<order number , order>
     private Map<Integer,Order> ordersForCurrentDate;
     // Map<order number , date>
@@ -45,23 +49,24 @@ public class OrderDaoFileImpl implements OrderDao {
     }
 
     @Override
-    public Order getOrder(Date orderDate, int orderNumber) {
-        return null;
+    public Order getOrder(int orderNumber) {
+        return ordersForCurrentDate.get(orderNumber);
     }
 
     @Override
-    public Order editOrder(Date orderDate, int orderNumber, Order newOrder) {
-        return null;
+    public Order editOrder(Order newOrder) {
+        return ordersForCurrentDate.put(newOrder.getOrderNumber(),newOrder);
     }
 
     @Override
     public List<Order> getOrders() {
-        return List.of();
+        return ordersForCurrentDate.values().stream().toList();
     }
 
     @Override
-    public Order removeOrder(Date orderDate, int orderNumber) {
-        return null;
+    public Order removeOrder(int orderNumber) {
+        inUseOrderNumbers.remove(orderNumber);
+        return ordersForCurrentDate.remove(orderNumber);
     }
 
     @Override
@@ -71,13 +76,13 @@ public class OrderDaoFileImpl implements OrderDao {
         }
         this.currentDate = date;
 
-        Format dateFormaterForFile = new SimpleDateFormat("MMddyyyy");
-        String fileName = FILE_PATH + "Orders_" + dateFormaterForFile.format(date) + ".txt";
+        String fileName = "Orders_" + DATE_FORMATER.format(date) + ".txt";
 
         ordersForCurrentDate = loadOrdersFromFileName(fileName);
 
     }
 
+    // get all in-use order numbers. does not store orders into memory
     @Override
     public Map<Integer, Date> loadOrderNumbers() throws PersistenceException {
         File folder = new File(FILE_PATH);
@@ -97,41 +102,71 @@ public class OrderDaoFileImpl implements OrderDao {
         // regex filter for files
         Pattern filePattern = Pattern.compile("Orders_[0-9][0-9][0-9][0-9][0-9][0-9][0-9][0-9].txt");
 
+        // skim each date file for its order numbers
         Arrays.stream(dateFiles).sequential()
 
                 //filter by name
                 .filter(file -> filePattern.matcher(file.getName()).find())
 
                 //load file
-                .map(file -> {
+                .forEach(file -> {
+
+                    // load order numbers
+                    Set<Integer> orderNumbers;
+                    Date date;
                     try {
-                        return loadOrdersFromFileName(file.getName());
+                        orderNumbers = loadOrderNumbersForDate(file.getName());
+                        date = new SimpleDateFormat("MMddyyyy").parse(file.getName()
+                                .replace("Orders_", "")
+                                .replace(".txt", ""));
                     } catch (Exception e) {
                         //could not load file
-                        return null;
+                        return;
                     }
-                })
 
-                //remove not loaded files
-                .filter(Objects::nonNull)
+                    // update inUseOrderNumbers
 
-                //remove empty files
-                .filter(file -> !file.isEmpty())
-
-                //iterate through orders and put to inUseOrderNumbers
-                .forEach(file -> {
-                    for (int orderNumber : file.keySet()) {
-                        inUseOrderNumbers.put(orderNumber,file.get(orderNumber).getOrderDate());
+                    for (int number : orderNumbers) {
+                        inUseOrderNumbers.put(number,date);
                     }
                 });
 
-        ;
+        return inUseOrderNumbers;
+    }
 
-        return Map.of();
+    @Override
+    public void exportData() throws PersistenceException {
+
+        try {
+            String fileName = FILE_PATH + "Orders_" + DATE_FORMATER.format(currentDate) + ".txt";
+            PrintWriter writter = new PrintWriter(new FileWriter(fileName));
+
+            //write parameters line
+            writter.println(FILE_PARAMETERS);
+
+            // write order on each line
+            Set<Integer> orderNumbers = ordersForCurrentDate.keySet();
+            for (int number : orderNumbers) {
+                writter.println(marchallOrder(ordersForCurrentDate.get(number)));
+            }
+
+            writter.flush();
+            writter.close();
+
+        } catch (IOException e) {
+            throw new PersistenceException("Error writing to file",e);
+        }
+
+    }
+
+    private Set<Integer> loadOrderNumbersForDate(String filename) throws PersistenceException {
+        Map<Integer, Order> orders = loadOrdersFromFileName(filename);
+
+        return orders.keySet();
     }
 
     private Map<Integer,Order> loadOrdersFromFileName(String fileName) throws PersistenceException {
-        Scanner scanner = getFileScanner(fileName);
+        Scanner scanner = getFileScanner(FILE_PATH + fileName);
 
         //if no file exists
         if (scanner == null) {
@@ -153,6 +188,7 @@ public class OrderDaoFileImpl implements OrderDao {
 
             currentLine = scanner.nextLine();
             currentOrder = unmarshallOrder(currentLine);
+            currentOrder.setOrderDate(currentDate);
 
             try {
                 orders.put(currentOrder.getOrderNumber(),currentOrder);
@@ -190,6 +226,26 @@ public class OrderDaoFileImpl implements OrderDao {
             }
         }
 
+    }
+    
+    private String marchallOrder (Order order) {
+        // OrderNumber::CustomerName::State::TaxRate::ProductType::Area::CostPerSquareFoot::LaborCostPerSquareFoot::MaterialCost::LaborCost::Tax::Total
+        String out = "";
+        
+        out += order.getOrderNumber() + DELIMITER;
+        out += order.getCustomerName() + DELIMITER;
+        out += order.getState() + DELIMITER;
+        out += order.getTaxRate() + DELIMITER;
+        out += order.getProductType() + DELIMITER;
+        out += order.getArea() + DELIMITER;
+        out += order.getCostPerSquareFoot() + DELIMITER;
+        out += order.getLabourCostPerSquareFoot() + DELIMITER;
+        out += order.getMaterialCost() + DELIMITER;
+        out += order.getLabourCost() + DELIMITER;
+        out += order.getTax() + DELIMITER;
+        out += order.getTotal();
+        
+        return out;
     }
 
     private Order unmarshallOrder(String raw) throws PersistenceException {

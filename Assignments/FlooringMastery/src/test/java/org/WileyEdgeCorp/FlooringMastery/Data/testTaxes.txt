@@ -1,0 +1,2 @@
+State::StateName::TaxRate
+TS::TestState::4.45

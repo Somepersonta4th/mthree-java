@@ -13,15 +13,17 @@ public interface OrderDao {
 
     public Order addOrder(Order order);
 
-    public Order getOrder(Date orderDate, int orderNumber);
+    public Order getOrder(int orderNumber);
 
-    public Order editOrder(Date orderDate, int orderNumber, Order newOrder);
+    public Order editOrder(Order newOrder);
 
     public List<Order> getOrders();
 
-    public Order removeOrder(Date orderDate, int orderNumber);
+    public Order removeOrder(int orderNumber);
 
     void loadDate(Date date) throws PersistenceException;
 
     Map<Integer, Date> loadOrderNumbers() throws PersistenceException;
+
+    void exportData() throws PersistenceException;
 }

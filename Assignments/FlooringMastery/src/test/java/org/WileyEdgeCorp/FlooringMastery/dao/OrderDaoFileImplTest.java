@@ -8,6 +8,7 @@ import org.junit.jupiter.api.Test;
 
 import java.io.FileWriter;
 import java.io.IOException;
+import java.io.PrintWriter;
 import java.math.BigDecimal;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -28,10 +29,6 @@ public class OrderDaoFileImplTest {
     orderDao.addOrder(newOrder)
     orderDao.editOrder(newOrder*) -> newOrder*
     orderDao.getOrder(newOrder) -> newOrder*
-
-    edit order not exist
-    orderDao.editOrder(newOrder) -> null
-    orderDao.getOrder(newOrder) -> null
 
     get orders
     orderDao.addOrder(newOrder)
@@ -55,7 +52,7 @@ public class OrderDaoFileImplTest {
     // yyyy = 2000
     // MM = 01
     // dd = 01
-    private String testFile = "Orders_01012000.txt";
+    private String testFile = "src/test/java/org/WileyEdgeCorp/FlooringMastery/Data/Orders_01012000.txt";
     private Date testDate = new SimpleDateFormat("yyyyMMdd").parse("20000101");
     private String newOrderString = """
             OrderNumber::CustomerName::State::TaxRate::ProductType::Area::CostPerSquareFoot::LaborCostPerSquareFoot::MaterialCost::LaborCost::Tax::Total
@@ -70,7 +67,10 @@ public class OrderDaoFileImplTest {
         orderDao = new OrderDaoFileImpl(testDate);
 
         // create blank test file
-        new FileWriter(testFile);
+        PrintWriter writer = new PrintWriter(new FileWriter(testFile));
+        writer.println(newOrderString);
+        writer.flush();
+        writer.close();
 
         // create new order
         newOrder = new Order();
@@ -91,7 +91,7 @@ public class OrderDaoFileImplTest {
     public void addOrderTest(){
 
         Order added = orderDao.addOrder(newOrder);
-        Order got = orderDao.getOrder(newOrderDate,newOrderNumber);
+        Order got = orderDao.getOrder(newOrderNumber);
 
         Assertions.assertEquals(newOrder, added);
         Assertions.assertEquals(newOrder, got);
@@ -104,22 +104,11 @@ public class OrderDaoFileImplTest {
 
         newOrder.setProductType("newTestProduct");
 
-        Order edited = orderDao.editOrder(newOrderDate,newOrderNumber,newOrder);
-        Order got = orderDao.getOrder(newOrderDate,newOrderNumber);
+        Order edited = orderDao.editOrder(newOrder);
+        Order got = orderDao.getOrder(newOrderNumber);
 
         Assertions.assertEquals(newOrder, edited);
         Assertions.assertEquals(newOrder, got);
-
-    }
-
-    @Test
-    public void editOrderNotExistTest(){
-
-        Order edited = orderDao.editOrder(newOrderDate,newOrderNumber,newOrder);
-        Order got = orderDao.getOrder(newOrderDate,newOrderNumber);
-
-        Assertions.assertNull(edited);
-        Assertions.assertNull(got);
 
     }
 
@@ -137,8 +126,8 @@ public class OrderDaoFileImplTest {
     public void removeOrderTest(){
         Order added = orderDao.addOrder(newOrder);
 
-        Order removed = orderDao.removeOrder(newOrderDate,newOrderNumber);
-        Order got = orderDao.getOrder(newOrderDate,newOrderNumber);
+        Order removed = orderDao.removeOrder(newOrderNumber);
+        Order got = orderDao.getOrder(newOrderNumber);
 
         Assertions.assertEquals(newOrder, removed);
         Assertions.assertNull(got);
@@ -148,7 +137,7 @@ public class OrderDaoFileImplTest {
     @Test
     public void removeOrderNotExistTest(){
 
-        Order removed = orderDao.removeOrder(newOrderDate,newOrderNumber);
+        Order removed = orderDao.removeOrder(2);
 
         Assertions.assertNull(removed);
 

@@ -1,1 +1,2 @@
 OrderNumber::CustomerName::State::TaxRate::ProductType::Area::CostPerSquareFoot::LaborCostPerSquareFoot::MaterialCost::LaborCost::Tax::Total
+1::customer1::Texas::4.45::Laminate::150::1.75::2.10::262.50::315.00::25.698750::603.198750

@@ -8,6 +8,7 @@ import org.junit.jupiter.api.Test;
 
 import java.io.FileWriter;
 import java.io.IOException;
+import java.io.PrintWriter;
 import java.util.List;
 
 public class TaxDaoFileImplTest {
@@ -22,21 +23,22 @@ public class TaxDaoFileImplTest {
     private TaxDao taxDao;
 
     private Tax newTax;
-    private String testFile = "testProducts.txt";
+    private String testFile = "src/test/java/org/WileyEdgeCorp/FlooringMastery/Data/testTaxes.txt";
     private String testTaxString = """
             State::StateName::TaxRate
             TS::TestState::4.45""";
 
     @BeforeEach
     public void setUp() throws IOException, PersistenceException {
+        // create test file
+        PrintWriter writer = new PrintWriter(new FileWriter(testFile));
+        writer.println(testTaxString);
+        writer.flush();
+        writer.close();
+
         // create dao
         taxDao = new TaxDaoFileImpl(testFile);
 
-        // create blank test file
-        FileWriter writer = new FileWriter(testFile);
-        writer.append(testTaxString);
-        writer.flush();
-        writer.close();
     }
 
     @Test

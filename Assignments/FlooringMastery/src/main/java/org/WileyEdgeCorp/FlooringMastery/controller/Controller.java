@@ -5,6 +5,7 @@ import org.WileyEdgeCorp.FlooringMastery.exceptions.NoDataLoaded;
 import org.WileyEdgeCorp.FlooringMastery.dto.Order;
 import org.WileyEdgeCorp.FlooringMastery.dto.Product;
 import org.WileyEdgeCorp.FlooringMastery.dto.Tax;
+import org.WileyEdgeCorp.FlooringMastery.exceptions.NoSuchOrderException;
 import org.WileyEdgeCorp.FlooringMastery.exceptions.PersistenceException;
 import org.WileyEdgeCorp.FlooringMastery.service.ServiceLayer;
 import org.WileyEdgeCorp.FlooringMastery.ui.View;
@@ -12,6 +13,7 @@ import org.WileyEdgeCorp.FlooringMastery.ui.View;
 import java.util.Date;
 import java.util.List;
 import java.util.Map;
+import java.util.NoSuchElementException;
 
 public class Controller {
     private ServiceLayer service;
@@ -85,37 +87,102 @@ public class Controller {
     }
 
     private void changeDate() throws PersistenceException {
-        // select date to use
-        Date dateToUse = view.getNewDate();
 
-        // if date unchanged
-        if (dateToUse == null
-        || dateToUse.equals(inUseDate)) {
+        // select date to use
+        Date newDate = view.getNewDate();
+
+        // return if date unchanged
+        if (newDate == null
+        || newDate.equals(inUseDate)) {
             return;
         }
 
+        // save data for current date
+        if (inUseDate != null) {
+            exportData();
+        }
+
         // load data for date
+        inUseDate = newDate;
         try {
-            service.loadDate(dateToUse);
+            service.loadDate(inUseDate);
         } catch (PersistenceException e) {
             throw new PersistenceException("Fatal: fatal error when loading date file. Either file cannot be created or file exists but may be malformed.", e);
         }
+
+        view.displayNewDateMessage(inUseDate);
     }
 
     private void unknownSelection() {
-        throw new UnsupportedOperationException("");
+        view.displayUnknownSelectionMessage();
     }
 
     private void exportData() {
-        throw new UnsupportedOperationException("");
+        try {
+            service.exportData();
+        } catch (PersistenceException e) {
+            view.displayFailedToExportMessage();
+        }
     }
 
     private void removeOrder() {
-        throw new UnsupportedOperationException("");
+        Order order = getOrder();
+        if (order == null) {
+            return;
+        }
+
+        view.displayOrder(order);
+
+        // verify remove order
+        if (!view.getVerifyRemove()) {
+            view.displayNotRemovingOrderMessage();
+            return;
+        }
+
+        Order removed = service.removeOrder(order.getOrderNumber());
+
+        // check order was removed
+        if (removed == null) {
+            view.displayNoOrderMessage();
+            return;
+        }
+
+        view.displayOrderRemovedMessage();
+
     }
 
     private void editOrder() {
-        throw new UnsupportedOperationException("");
+        Order order = getOrder();
+        if (order == null) {
+            return;
+        }
+
+        //verity products and taxes available
+        List<Product> products;
+        try {
+            products = service.getProducts();
+        } catch (NoDataLoaded e) {
+            view.displayNoProductsMessage();
+            return;
+        }
+
+        List<Tax> taxes;
+        try {
+            taxes = service.getTaxes();
+        } catch (NoDataLoaded e) {
+            view.displayNoTaxesMessage();
+            return;
+        }
+
+        // update order
+        order = view.editOrder(order,products,taxes);
+
+        try {
+            service.editOrder(order);
+        } catch (NoSuchOrderException e) {
+            view.displayNoOrderMessage();
+        }
+
     }
 
     private void addOrder() {
@@ -140,6 +207,7 @@ public class Controller {
 
         //get properties from user
         Order newOrder = view.createOrder(products,taxes);
+        newOrder.setOrderDate(inUseDate);
 
         //confirm order details
         boolean confirmAdd = view.confirmAddOrder(newOrder);
@@ -165,7 +233,23 @@ public class Controller {
     }
 
     private void displayOrder() {
-        throw new UnsupportedOperationException("");
+        List<Order> orders = service.getOrders();
+        view.displayOrders(orders);
+    }
+
+    // get order number from user then return order
+    private Order getOrder() {
+        int orderNum = view.getOrder();
+
+        Order order;
+        try {
+            order = service.getOrder(orderNum);
+        } catch (NoSuchOrderException e) {
+            view.displayNoOrderMessage();
+            return null;
+        }
+
+        return order;
     }
 
     private void exitMessage() {

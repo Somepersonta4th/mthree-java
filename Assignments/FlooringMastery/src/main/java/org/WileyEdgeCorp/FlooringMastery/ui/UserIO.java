@@ -11,11 +11,17 @@ public interface UserIO {
 
     int readInt(String s, int min);
 
+    int readInt(String prompt, int min, boolean canBeEmpty);
+
     int readInt(String prompt, int min, int max);
+
+    int readInt(String prompt, int min, int max, boolean canBeEmpty);
 
     String readString(String s);
 
     Date readDate(String s);
 
     BigDecimal readBigDecimal(String s);
+
+    BigDecimal readBigDecimal(String s, boolean canBeNull);
 }

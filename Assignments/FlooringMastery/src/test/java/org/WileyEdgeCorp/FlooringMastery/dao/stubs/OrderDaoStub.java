@@ -2,13 +2,12 @@ package org.WileyEdgeCorp.FlooringMastery.dao.stubs;
 
 import org.WileyEdgeCorp.FlooringMastery.dao.OrderDao;
 import org.WileyEdgeCorp.FlooringMastery.dto.Order;
+import org.WileyEdgeCorp.FlooringMastery.exceptions.PersistenceException;
 
 import java.math.BigDecimal;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.List;
+import java.util.*;
 
 public class OrderDaoStub implements OrderDao {
 
@@ -41,26 +40,28 @@ public class OrderDaoStub implements OrderDao {
 
     @Override
     public Order addOrder(Order order) {
-        if (order.getOrderDate().equals(testOrder.getOrderDate())
-        && order.getOrderNumber() == testOrder.getOrderNumber()) {
+        if (!(order.getOrderDate().equals(testOrder.getOrderDate())
+        && order.getOrderNumber() == testOrder.getOrderNumber())) {
+            return order;
+        }
+        return null;
+    }
+
+    @Override
+    public Order getOrder(int orderNumber) {
+        if (testOrder == null) {
+            return null;
+        }
+        if (orderNumber == testOrder.getOrderNumber()) {
             return testOrder;
         }
         return null;
     }
 
     @Override
-    public Order getOrder(Date orderDate, int orderNumber) {
-        if (orderDate.equals(testOrder.getOrderDate())
-                && orderNumber == testOrder.getOrderNumber()) {
-            return testOrder;
-        }
-        return null;
-    }
-
-    @Override
-    public Order editOrder(Date orderDate, int orderNumber, Order newOrder) {
-        if (orderDate.equals(testOrder.getOrderDate())
-                && orderNumber == testOrder.getOrderNumber()) {
+    public Order editOrder(Order newOrder) {
+        if (newOrder.getOrderDate().equals(testOrder.getOrderDate())
+                && newOrder.getOrderNumber() == testOrder.getOrderNumber()) {
             testOrder = newOrder;
             return testOrder;
         }
@@ -75,13 +76,32 @@ public class OrderDaoStub implements OrderDao {
     }
 
     @Override
-    public Order removeOrder(Date orderDate, int orderNumber) {
-        if (orderDate.equals(testOrder.getOrderDate())
-                && orderNumber == testOrder.getOrderNumber()) {
+    public Order removeOrder(int orderNumber) {
+        if (testOrder == null) {
+            return null;
+        }
+        if (orderNumber == testOrder.getOrderNumber()) {
             Order temp = testOrder;
             testOrder = null;
             return temp;
         }
         return null;
+    }
+
+    @Override
+    public void loadDate(Date date) throws PersistenceException {
+
+    }
+
+    @Override
+    public Map<Integer, Date> loadOrderNumbers() throws PersistenceException {
+        Map<Integer, Date> map = new HashMap<>();
+        map.put(testOrder.getOrderNumber(),testOrder.getOrderDate());
+        return map;
+    }
+
+    @Override
+    public void exportData() throws PersistenceException {
+
     }
 }

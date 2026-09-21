@@ -17,17 +17,14 @@
 
     <!-- Bean definitions go here -->
 
-
-    <bean id="ExportStub"
-          class="org.WileyEdgeCorp.FlooringMastery.dao.stubs.ExportDaoStub"/>
-
-    <bean id="OrderStub"
+    <bean id="orderStub"
           class="org.WileyEdgeCorp.FlooringMastery.dao.stubs.OrderDaoStub"/>
 
-    <bean id="ProductStub"
+    <bean id="productStub"
           class="org.WileyEdgeCorp.FlooringMastery.dao.stubs.ProductDaoStub"/>
 
-    <bean id="TaxStub"
+    <bean id="taxStub"
           class="org.WileyEdgeCorp.FlooringMastery.dao.stubs.TaxDaoStub"/>
+
 
 </beans>

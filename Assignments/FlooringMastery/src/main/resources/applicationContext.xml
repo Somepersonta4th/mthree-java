@@ -17,9 +17,6 @@
 
     <!-- Bean definitions go here -->
 
-    <bean id="exportDaoFileImpl"
-          class="org.WileyEdgeCorp.FlooringMastery.dao.ExportDaoFileImpl"/>
-
     <bean id="orderDaoFileImpl"
           class="org.WileyEdgeCorp.FlooringMastery.dao.OrderDaoFileImpl"/>
 
@@ -35,7 +32,6 @@
 
     <bean id="serviceLayerImpl"
           class="org.WileyEdgeCorp.FlooringMastery.service.ServiceLayerImpl">
-        <constructor-arg ref="exportDaoFileImpl"/>
         <constructor-arg ref="orderDaoFileImpl"/>
         <constructor-arg ref="productDaoFileImpl"/>
         <constructor-arg ref="taxDaoFileImpl"/>

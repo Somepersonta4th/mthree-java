@@ -1,11 +1,15 @@
 package org.WileyEdgeCorp.FlooringMastery.service;
 
 import org.WileyEdgeCorp.FlooringMastery.dao.*;
+import org.WileyEdgeCorp.FlooringMastery.dao.stubs.OrderDaoStub;
+import org.WileyEdgeCorp.FlooringMastery.dao.stubs.ProductDaoStub;
+import org.WileyEdgeCorp.FlooringMastery.dao.stubs.TaxDaoStub;
 import org.WileyEdgeCorp.FlooringMastery.dto.Order;
 import org.WileyEdgeCorp.FlooringMastery.dto.Product;
 import org.WileyEdgeCorp.FlooringMastery.dto.Tax;
 import org.WileyEdgeCorp.FlooringMastery.exceptions.DataCollisionException;
 import org.WileyEdgeCorp.FlooringMastery.exceptions.NoDataLoaded;
+import org.WileyEdgeCorp.FlooringMastery.exceptions.NoSuchOrderException;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -17,9 +21,6 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
-
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertNotNull;
 
 class ServiceLayerImplTest {
 
@@ -60,7 +61,6 @@ class ServiceLayerImplTest {
 
      */
 
-    private ExportDao exportDao;
     private OrderDao orderDao;
     private ProductDao productDao;
     private TaxDao taxDao;
@@ -76,7 +76,8 @@ class ServiceLayerImplTest {
     public void setUp() throws ParseException {
 
         //create service layer
-        service = ctx.getBean("serviceLayer", ServiceLayer.class);
+        //service = ctx.getBean("serviceLayer", ServiceLayer.class);
+        service = new ServiceLayerImpl(new OrderDaoStub(),new ProductDaoStub(), new TaxDaoStub());
 
         //set up new order for order dao tests
         newOrderDate = new SimpleDateFormat("yyyyMMdd").parse("20000101");
@@ -98,7 +99,7 @@ class ServiceLayerImplTest {
         Date testDate = newOrderDate;
         int testNumber = 1;
 
-        Order result = service.getOrder(testDate,testNumber);
+        Order result = service.getOrder(testNumber);
 
         Assertions.assertNotNull(result);
     }
@@ -109,7 +110,7 @@ class ServiceLayerImplTest {
         Date testDate = newOrderDate;
         int testNumber = 3;
 
-        Order result = service.getOrder(testDate,testNumber);
+        Order result = service.getOrder(testNumber);
 
         Assertions.assertNull(result);
     }
@@ -121,9 +122,8 @@ class ServiceLayerImplTest {
         int testNumber = newOrderNumber;
 
         Order added = service.addOrder(newOrder);
-        Order got = service.getOrder(testDate,testNumber);
 
-        Assertions.assertEquals(added, got);
+        Assertions.assertEquals(newOrder, added);
     }
 
     @Test
@@ -131,9 +131,11 @@ class ServiceLayerImplTest {
         //target testOrder
         newOrder.setOrderNumber(1);
 
-        Order added = service.addOrder(newOrder);
-
-        Assertions.assertNull(added);
+        try {
+            Order added = service.addOrder(newOrder);
+            Assertions.fail();
+        } catch (DataCollisionException e) {
+        }
     }
 
     @Test
@@ -143,8 +145,8 @@ class ServiceLayerImplTest {
         int testNumber = 1;
         newOrder.setOrderNumber(1);
 
-        Order result = service.editOrder(testDate,testNumber,newOrder);
-        Order got = service.getOrder(testDate,testNumber);
+        Order result = service.editOrder(newOrder);
+        Order got = service.getOrder(testNumber);
 
         Assertions.assertEquals(result,newOrder);
         Assertions.assertEquals(got,newOrder);
@@ -156,9 +158,12 @@ class ServiceLayerImplTest {
         Date testDate = newOrderDate;
         int testNumber = 3;
 
-        Order result = service.editOrder(testDate,testNumber,newOrder);
-
-        Assertions.assertNull(result);
+        Order result = null;
+        try {
+            service.editOrder(newOrder);
+            Assertions.fail();
+        } catch (NoSuchOrderException e) {
+        }
     }
 
     @Test
@@ -167,10 +172,10 @@ class ServiceLayerImplTest {
         Date testDate = newOrderDate;
         int testNumber = 1;
 
-        Order testOrder = service.getOrder(testDate,testNumber);
+        Order testOrder = service.getOrder(testNumber);
 
-        Order result = service.removeOrder(testDate,testNumber);
-        Order got = service.getOrder(testDate,testNumber);
+        Order result = service.removeOrder(testNumber);
+        Order got = service.getOrder(testNumber);
 
         Assertions.assertEquals(result,testOrder);
         Assertions.assertNull(got);
@@ -182,7 +187,7 @@ class ServiceLayerImplTest {
         Date testDate = newOrderDate;
         int testNumber = 3;
 
-        Order result = service.removeOrder(testDate,testNumber);
+        Order result = service.removeOrder(testNumber);
 
         Assertions.assertNull(result);
     }

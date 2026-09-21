@@ -6,6 +6,7 @@ import org.WileyEdgeCorp.FlooringMastery.dto.Product;
 import org.WileyEdgeCorp.FlooringMastery.dto.Tax;
 import org.WileyEdgeCorp.FlooringMastery.exceptions.DataCollisionException;
 import org.WileyEdgeCorp.FlooringMastery.exceptions.NoDataLoaded;
+import org.WileyEdgeCorp.FlooringMastery.exceptions.NoSuchOrderException;
 import org.WileyEdgeCorp.FlooringMastery.exceptions.PersistenceException;
 
 import java.util.Date;
@@ -14,15 +15,13 @@ import java.util.Map;
 
 public class ServiceLayerImpl implements ServiceLayer {
 
-    private ExportDao exportDao;
     private OrderDao orderDao;
     private ProductDao productDao;
     private TaxDao taxDao;
 
     public ServiceLayerImpl () {}
 
-    public ServiceLayerImpl(ExportDao exportDao, OrderDao orderDao, ProductDao productDao, TaxDao taxDao) {
-        this.exportDao = exportDao;
+    public ServiceLayerImpl(OrderDao orderDao, ProductDao productDao, TaxDao taxDao) {
         this.orderDao = orderDao;
         this.productDao = productDao;
         this.taxDao = taxDao;
@@ -45,22 +44,33 @@ public class ServiceLayerImpl implements ServiceLayer {
     }
 
     @Override
-    public Order getOrder(Date date, int orderNumber) {
-        return null;
+    public List<Order> getOrders() {
+        return orderDao.getOrders();
     }
 
     @Override
-    public Order editOrder(Date date, int orderNumber, Order newOrder) {
-        return null;
+    public Order getOrder(int orderNumber) {
+        return orderDao.getOrder(orderNumber);
     }
 
     @Override
-    public Order removeOrder(Date date, int orderNumber) {
-        return null;
+    public Order editOrder(Order newOrder) throws NoSuchOrderException {
+        Order edited = orderDao.editOrder(newOrder);
+        if (edited == null) {
+            throw new NoSuchOrderException("No corresponding order number found in this date.");
+        }
+        return edited;
     }
 
     @Override
-    public void exportData() {}
+    public Order removeOrder(int orderNumber) {
+        return orderDao.removeOrder(orderNumber);
+    }
+
+    @Override
+    public void exportData() throws PersistenceException {
+        orderDao.exportData();
+    }
 
     @Override
     public List<Tax> getTaxes() throws NoDataLoaded {

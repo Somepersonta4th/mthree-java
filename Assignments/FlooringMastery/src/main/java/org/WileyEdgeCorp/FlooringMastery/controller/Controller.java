@@ -1,7 +1,7 @@
 package org.WileyEdgeCorp.FlooringMastery.controller;
 
 import org.WileyEdgeCorp.FlooringMastery.exceptions.DataCollisionException;
-import org.WileyEdgeCorp.FlooringMastery.exceptions.NoDataLoaded;
+import org.WileyEdgeCorp.FlooringMastery.exceptions.NoDataLoadedException;
 import org.WileyEdgeCorp.FlooringMastery.dto.Order;
 import org.WileyEdgeCorp.FlooringMastery.dto.Product;
 import org.WileyEdgeCorp.FlooringMastery.dto.Tax;
@@ -13,7 +13,6 @@ import org.WileyEdgeCorp.FlooringMastery.ui.View;
 import java.util.Date;
 import java.util.List;
 import java.util.Map;
-import java.util.NoSuchElementException;
 
 public class Controller {
     private ServiceLayer service;
@@ -161,7 +160,7 @@ public class Controller {
         List<Product> products;
         try {
             products = service.getProducts();
-        } catch (NoDataLoaded e) {
+        } catch (NoDataLoadedException e) {
             view.displayNoProductsMessage();
             return;
         }
@@ -169,7 +168,7 @@ public class Controller {
         List<Tax> taxes;
         try {
             taxes = service.getTaxes();
-        } catch (NoDataLoaded e) {
+        } catch (NoDataLoadedException e) {
             view.displayNoTaxesMessage();
             return;
         }
@@ -192,7 +191,7 @@ public class Controller {
         List<Product> products = null;
         try {
             products = service.getProducts();
-        } catch (NoDataLoaded e) {
+        } catch (NoDataLoadedException e) {
             view.displayNoProductsMessage();
             return;
         }
@@ -200,7 +199,7 @@ public class Controller {
         List<Tax> taxes;
         try {
             taxes = service.getTaxes();
-        } catch (NoDataLoaded e) {
+        } catch (NoDataLoadedException e) {
             view.displayNoTaxesMessage();
             return;
         }

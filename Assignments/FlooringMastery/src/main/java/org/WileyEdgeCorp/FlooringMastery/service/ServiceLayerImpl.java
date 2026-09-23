@@ -5,7 +5,7 @@ import org.WileyEdgeCorp.FlooringMastery.dto.Order;
 import org.WileyEdgeCorp.FlooringMastery.dto.Product;
 import org.WileyEdgeCorp.FlooringMastery.dto.Tax;
 import org.WileyEdgeCorp.FlooringMastery.exceptions.DataCollisionException;
-import org.WileyEdgeCorp.FlooringMastery.exceptions.NoDataLoaded;
+import org.WileyEdgeCorp.FlooringMastery.exceptions.NoDataLoadedException;
 import org.WileyEdgeCorp.FlooringMastery.exceptions.NoSuchOrderException;
 import org.WileyEdgeCorp.FlooringMastery.exceptions.PersistenceException;
 
@@ -73,19 +73,19 @@ public class ServiceLayerImpl implements ServiceLayer {
     }
 
     @Override
-    public List<Tax> getTaxes() throws NoDataLoaded {
+    public List<Tax> getTaxes() throws NoDataLoadedException {
         List<Tax> taxes = taxDao.getAllTaxes();
         if (taxes.isEmpty()) {
-            throw new NoDataLoaded("no taxes loaded");
+            throw new NoDataLoadedException("no taxes loaded");
         }
         return taxes;
     }
 
     @Override
-    public List<Product> getProducts() throws NoDataLoaded {
+    public List<Product> getProducts() throws NoDataLoadedException {
         List<Product> products = productDao.getAllProducts();
         if (products.isEmpty()) {
-            throw new NoDataLoaded("no products loaded");
+            throw new NoDataLoadedException("no products loaded");
         }
         return products;
     }

@@ -8,7 +8,7 @@ import org.WileyEdgeCorp.FlooringMastery.dto.Order;
 import org.WileyEdgeCorp.FlooringMastery.dto.Product;
 import org.WileyEdgeCorp.FlooringMastery.dto.Tax;
 import org.WileyEdgeCorp.FlooringMastery.exceptions.DataCollisionException;
-import org.WileyEdgeCorp.FlooringMastery.exceptions.NoDataLoaded;
+import org.WileyEdgeCorp.FlooringMastery.exceptions.NoDataLoadedException;
 import org.WileyEdgeCorp.FlooringMastery.exceptions.NoSuchOrderException;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
@@ -193,7 +193,7 @@ class ServiceLayerImplTest {
     }
 
     @Test
-    void getTaxesTest() throws ParseException, NoDataLoaded {
+    void getTaxesTest() throws ParseException, NoDataLoadedException {
 
         List<Tax> result = service.getTaxes();
 
@@ -201,7 +201,7 @@ class ServiceLayerImplTest {
     }
 
     @Test
-    void getProductsTest() throws ParseException, NoDataLoaded {
+    void getProductsTest() throws ParseException, NoDataLoadedException {
 
 
         List<Product> result = service.getProducts();

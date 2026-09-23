@@ -1,7 +1,7 @@
 package org.WileyEdgeCorp.FlooringMastery.service;
 
 import org.WileyEdgeCorp.FlooringMastery.exceptions.DataCollisionException;
-import org.WileyEdgeCorp.FlooringMastery.exceptions.NoDataLoaded;
+import org.WileyEdgeCorp.FlooringMastery.exceptions.NoDataLoadedException;
 import org.WileyEdgeCorp.FlooringMastery.dto.Order;
 import org.WileyEdgeCorp.FlooringMastery.dto.Product;
 import org.WileyEdgeCorp.FlooringMastery.dto.Tax;
@@ -28,9 +28,9 @@ public interface ServiceLayer {
 
     public void exportData() throws PersistenceException;
 
-    public List<Tax> getTaxes() throws NoDataLoaded;
+    public List<Tax> getTaxes() throws NoDataLoadedException;
 
-    public List<Product> getProducts() throws NoDataLoaded;
+    public List<Product> getProducts() throws NoDataLoadedException;
 
     Map<Integer, Date> loadOrderNumbers() throws PersistenceException;
 

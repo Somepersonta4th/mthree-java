@@ -27,6 +27,7 @@ jobs:
         with:
           java-version: '17'
           distribution: 'corretto'
+          cache: 'maven'
 
       - name: Set up Maven
         uses: stCarolas/setup-maven@v5
@@ -34,4 +35,7 @@ jobs:
           maven-version: 3.8.2
 
       - name: Build with Maven
+        run: mvn -B package --file java-school-database/pom.xml
+
+      - name: Run tests with Maven
         run: mvn -B test

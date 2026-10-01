@@ -92,7 +92,7 @@ public class CourseDaoImplTests {
         int studentCount = jdbcTemplate.queryForObject(sql, Integer.class);
         assertEquals(4, studentCount);
         // should this line be added??
-        // courseDao.deleteAllStudentsFromCourse(7);
+        courseDao.deleteAllStudentsFromCourse(7);
         //
         studentCount = jdbcTemplate.queryForObject(sql, Integer.class);
         assertEquals(0, studentCount);
